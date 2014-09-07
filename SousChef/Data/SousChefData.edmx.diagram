@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="08b577cffa0541298163e85880709422" Name="Diagram1">
+        <EntityTypeShape EntityType="SousChefModel.Inventory" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="SousChefModel.InventoryUser" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="SousChefModel.InventoryUserSource" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="SousChefModel.Item" Width="1.5" PointX="7.5" PointY="5" />
+        <EntityTypeShape EntityType="SousChefModel.Receipt" Width="1.5" PointX="7.5" PointY="1.25" />
+        <EntityTypeShape EntityType="SousChefModel.ReceiptItem" Width="1.5" PointX="9.75" PointY="1.25" />
+        <EntityTypeShape EntityType="SousChefModel.Source" Width="1.5" PointX="3" PointY="5.375" />
+        <AssociationConnector Association="SousChefModel.FK_InventoryUser_InventoryUser" />
+        <AssociationConnector Association="SousChefModel.FK_InventoryUserSource_InventoryUser" />
+        <AssociationConnector Association="SousChefModel.FK_InventoryUserSource_Source" />
+        <AssociationConnector Association="SousChefModel.FK_Receipt_InventoryUserSource" />
+        <AssociationConnector Association="SousChefModel.FK_ReceiptItem_Item" />
+        <AssociationConnector Association="SousChefModel.FK_ReceiptItem_Receipt" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

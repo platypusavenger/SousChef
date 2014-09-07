@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SousChefModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="version" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InventoryUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventoryId" Type="int" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="32" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="isverified" Type="bit" Nullable="false" />
+          <Property Name="phoneNumber" Type="nvarchar" MaxLength="12" />
+        </EntityType>
+        <EntityType Name="InventoryUserSource">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventoryUserId" Type="int" Nullable="false" />
+          <Property Name="sourceId" Type="int" Nullable="false" />
+          <Property Name="accessKey" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="upc" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="isPerishable" Type="bit" Nullable="false" />
+          <Property Name="expiration" Type="int" Nullable="false" />
+          <Property Name="image" Type="nvarchar" MaxLength="512" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventoryUserSourceId" Type="int" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReceiptItem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="receiptId" Type="int" Nullable="false" />
+          <Property Name="itemId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_InventoryUser_InventoryUser">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="1" />
+          <End Role="InventoryUser" Type="Self.InventoryUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryUser">
+              <PropertyRef Name="inventoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryUserSource_InventoryUser">
+          <End Role="InventoryUser" Type="Self.InventoryUser" Multiplicity="1" />
+          <End Role="InventoryUserSource" Type="Self.InventoryUserSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryUserSource">
+              <PropertyRef Name="inventoryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryUserSource_Source">
+          <End Role="Source" Type="Self.Source" Multiplicity="1" />
+          <End Role="InventoryUserSource" Type="Self.InventoryUserSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryUserSource">
+              <PropertyRef Name="sourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_InventoryUserSource">
+          <End Role="InventoryUserSource" Type="Self.InventoryUserSource" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryUserSource">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="inventoryUserSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptItem_Item">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="ReceiptItem" Type="Self.ReceiptItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ReceiptItem">
+              <PropertyRef Name="itemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptItem_Receipt">
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1" />
+          <End Role="ReceiptItem" Type="Self.ReceiptItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipt">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ReceiptItem">
+              <PropertyRef Name="receiptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SousChefModelStoreContainer">
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryUser" EntityType="Self.InventoryUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryUserSource" EntityType="Self.InventoryUserSource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReceiptItem" EntityType="Self.ReceiptItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_InventoryUser_InventoryUser" Association="Self.FK_InventoryUser_InventoryUser">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="InventoryUser" EntitySet="InventoryUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryUserSource_InventoryUser" Association="Self.FK_InventoryUserSource_InventoryUser">
+            <End Role="InventoryUser" EntitySet="InventoryUser" />
+            <End Role="InventoryUserSource" EntitySet="InventoryUserSource" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryUserSource_Source" Association="Self.FK_InventoryUserSource_Source">
+            <End Role="Source" EntitySet="Source" />
+            <End Role="InventoryUserSource" EntitySet="InventoryUserSource" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_InventoryUserSource" Association="Self.FK_Receipt_InventoryUserSource">
+            <End Role="InventoryUserSource" EntitySet="InventoryUserSource" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptItem_Item" Association="Self.FK_ReceiptItem_Item">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="ReceiptItem" EntitySet="ReceiptItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptItem_Receipt" Association="Self.FK_ReceiptItem_Receipt">
+            <End Role="Receipt" EntitySet="Receipt" />
+            <End Role="ReceiptItem" EntitySet="ReceiptItem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SousChefModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SousChefEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Inventories" EntityType="SousChefModel.Inventory" />
+          <EntitySet Name="InventoryUsers" EntityType="SousChefModel.InventoryUser" />
+          <EntitySet Name="InventoryUserSources" EntityType="SousChefModel.InventoryUserSource" />
+          <EntitySet Name="Items" EntityType="SousChefModel.Item" />
+          <EntitySet Name="Receipts" EntityType="SousChefModel.Receipt" />
+          <EntitySet Name="ReceiptItems" EntityType="SousChefModel.ReceiptItem" />
+          <EntitySet Name="Sources" EntityType="SousChefModel.Source" />
+          <AssociationSet Name="FK_InventoryUser_InventoryUser" Association="SousChefModel.FK_InventoryUser_InventoryUser">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="InventoryUser" EntitySet="InventoryUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryUserSource_InventoryUser" Association="SousChefModel.FK_InventoryUserSource_InventoryUser">
+            <End Role="InventoryUser" EntitySet="InventoryUsers" />
+            <End Role="InventoryUserSource" EntitySet="InventoryUserSources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryUserSource_Source" Association="SousChefModel.FK_InventoryUserSource_Source">
+            <End Role="Source" EntitySet="Sources" />
+            <End Role="InventoryUserSource" EntitySet="InventoryUserSources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_InventoryUserSource" Association="SousChefModel.FK_Receipt_InventoryUserSource">
+            <End Role="InventoryUserSource" EntitySet="InventoryUserSources" />
+            <End Role="Receipt" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptItem_Item" Association="SousChefModel.FK_ReceiptItem_Item">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="ReceiptItem" EntitySet="ReceiptItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiptItem_Receipt" Association="SousChefModel.FK_ReceiptItem_Receipt">
+            <End Role="Receipt" EntitySet="Receipts" />
+            <End Role="ReceiptItem" EntitySet="ReceiptItems" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="version" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="InventoryUsers" Relationship="SousChefModel.FK_InventoryUser_InventoryUser" FromRole="Inventory" ToRole="InventoryUser" />
+        </EntityType>
+        <EntityType Name="InventoryUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventoryId" Type="Int32" Nullable="false" />
+          <Property Name="displayName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="isverified" Type="Boolean" Nullable="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Inventory" Relationship="SousChefModel.FK_InventoryUser_InventoryUser" FromRole="InventoryUser" ToRole="Inventory" />
+          <NavigationProperty Name="InventoryUserSources" Relationship="SousChefModel.FK_InventoryUserSource_InventoryUser" FromRole="InventoryUser" ToRole="InventoryUserSource" />
+        </EntityType>
+        <EntityType Name="InventoryUserSource">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventoryUserId" Type="Int32" Nullable="false" />
+          <Property Name="sourceId" Type="Int32" Nullable="false" />
+          <Property Name="accessKey" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="InventoryUser" Relationship="SousChefModel.FK_InventoryUserSource_InventoryUser" FromRole="InventoryUserSource" ToRole="InventoryUser" />
+          <NavigationProperty Name="Source" Relationship="SousChefModel.FK_InventoryUserSource_Source" FromRole="InventoryUserSource" ToRole="Source" />
+          <NavigationProperty Name="Receipts" Relationship="SousChefModel.FK_Receipt_InventoryUserSource" FromRole="InventoryUserSource" ToRole="Receipt" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="upc" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="isPerishable" Type="Boolean" Nullable="false" />
+          <Property Name="expiration" Type="Int32" Nullable="false" />
+          <Property Name="image" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ReceiptItems" Relationship="SousChefModel.FK_ReceiptItem_Item" FromRole="Item" ToRole="ReceiptItem" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventoryUserSourceId" Type="Int32" Nullable="false" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="InventoryUserSource" Relationship="SousChefModel.FK_Receipt_InventoryUserSource" FromRole="Receipt" ToRole="InventoryUserSource" />
+          <NavigationProperty Name="ReceiptItems" Relationship="SousChefModel.FK_ReceiptItem_Receipt" FromRole="Receipt" ToRole="ReceiptItem" />
+        </EntityType>
+        <EntityType Name="ReceiptItem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="receiptId" Type="Int32" Nullable="false" />
+          <Property Name="itemId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Item" Relationship="SousChefModel.FK_ReceiptItem_Item" FromRole="ReceiptItem" ToRole="Item" />
+          <NavigationProperty Name="Receipt" Relationship="SousChefModel.FK_ReceiptItem_Receipt" FromRole="ReceiptItem" ToRole="Receipt" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="InventoryUserSources" Relationship="SousChefModel.FK_InventoryUserSource_Source" FromRole="Source" ToRole="InventoryUserSource" />
+        </EntityType>
+        <Association Name="FK_InventoryUser_InventoryUser">
+          <End Type="SousChefModel.Inventory" Role="Inventory" Multiplicity="1" />
+          <End Type="SousChefModel.InventoryUser" Role="InventoryUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryUser">
+              <PropertyRef Name="inventoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryUserSource_InventoryUser">
+          <End Type="SousChefModel.InventoryUser" Role="InventoryUser" Multiplicity="1" />
+          <End Type="SousChefModel.InventoryUserSource" Role="InventoryUserSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryUserSource">
+              <PropertyRef Name="inventoryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryUserSource_Source">
+          <End Type="SousChefModel.Source" Role="Source" Multiplicity="1" />
+          <End Type="SousChefModel.InventoryUserSource" Role="InventoryUserSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryUserSource">
+              <PropertyRef Name="sourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Receipt_InventoryUserSource">
+          <End Type="SousChefModel.InventoryUserSource" Role="InventoryUserSource" Multiplicity="1" />
+          <End Type="SousChefModel.Receipt" Role="Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryUserSource">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="inventoryUserSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptItem_Item">
+          <End Type="SousChefModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="SousChefModel.ReceiptItem" Role="ReceiptItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ReceiptItem">
+              <PropertyRef Name="itemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiptItem_Receipt">
+          <End Type="SousChefModel.Receipt" Role="Receipt" Multiplicity="1" />
+          <End Type="SousChefModel.ReceiptItem" Role="ReceiptItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipt">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ReceiptItem">
+              <PropertyRef Name="receiptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SousChefModelStoreContainer" CdmEntityContainer="SousChefEntities">
+          <EntitySetMapping Name="Inventories">
+            <EntityTypeMapping TypeName="SousChefModel.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryUsers">
+            <EntityTypeMapping TypeName="SousChefModel.InventoryUser">
+              <MappingFragment StoreEntitySet="InventoryUser">
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="isverified" ColumnName="isverified" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="inventoryId" ColumnName="inventoryId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryUserSources">
+            <EntityTypeMapping TypeName="SousChefModel.InventoryUserSource">
+              <MappingFragment StoreEntitySet="InventoryUserSource">
+                <ScalarProperty Name="accessKey" ColumnName="accessKey" />
+                <ScalarProperty Name="sourceId" ColumnName="sourceId" />
+                <ScalarProperty Name="inventoryUserId" ColumnName="inventoryUserId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="SousChefModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="expiration" ColumnName="expiration" />
+                <ScalarProperty Name="isPerishable" ColumnName="isPerishable" />
+                <ScalarProperty Name="upc" ColumnName="upc" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receipts">
+            <EntityTypeMapping TypeName="SousChefModel.Receipt">
+              <MappingFragment StoreEntitySet="Receipt">
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="inventoryUserSourceId" ColumnName="inventoryUserSourceId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceiptItems">
+            <EntityTypeMapping TypeName="SousChefModel.ReceiptItem">
+              <MappingFragment StoreEntitySet="ReceiptItem">
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="receiptId" ColumnName="receiptId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sources">
+            <EntityTypeMapping TypeName="SousChefModel.Source">
+              <MappingFragment StoreEntitySet="Source">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
