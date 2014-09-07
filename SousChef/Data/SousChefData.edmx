@@ -21,7 +21,7 @@
           <Property Name="inventoryId" Type="int" Nullable="false" />
           <Property Name="displayName" Type="nvarchar" MaxLength="32" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="isverified" Type="bit" Nullable="false" />
+          <Property Name="isVerified" Type="bit" Nullable="false" />
           <Property Name="phoneNumber" Type="nvarchar" MaxLength="12" />
         </EntityType>
         <EntityType Name="InventoryUserSource">
@@ -178,20 +178,11 @@
       <Schema Namespace="SousChefModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SousChefEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Inventories" EntityType="SousChefModel.Inventory" />
-          <EntitySet Name="InventoryUsers" EntityType="SousChefModel.InventoryUser" />
           <EntitySet Name="InventoryUserSources" EntityType="SousChefModel.InventoryUserSource" />
           <EntitySet Name="Items" EntityType="SousChefModel.Item" />
           <EntitySet Name="Receipts" EntityType="SousChefModel.Receipt" />
           <EntitySet Name="ReceiptItems" EntityType="SousChefModel.ReceiptItem" />
           <EntitySet Name="Sources" EntityType="SousChefModel.Source" />
-          <AssociationSet Name="FK_InventoryUser_InventoryUser" Association="SousChefModel.FK_InventoryUser_InventoryUser">
-            <End Role="Inventory" EntitySet="Inventories" />
-            <End Role="InventoryUser" EntitySet="InventoryUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InventoryUserSource_InventoryUser" Association="SousChefModel.FK_InventoryUserSource_InventoryUser">
-            <End Role="InventoryUser" EntitySet="InventoryUsers" />
-            <End Role="InventoryUserSource" EntitySet="InventoryUserSources" />
-          </AssociationSet>
           <AssociationSet Name="FK_InventoryUserSource_Source" Association="SousChefModel.FK_InventoryUserSource_Source">
             <End Role="Source" EntitySet="Sources" />
             <End Role="InventoryUserSource" EntitySet="InventoryUserSources" />
@@ -208,6 +199,15 @@
             <End Role="Receipt" EntitySet="Receipts" />
             <End Role="ReceiptItem" EntitySet="ReceiptItems" />
           </AssociationSet>
+          <EntitySet Name="InventoryUsers" EntityType="SousChefModel.InventoryUser" />
+          <AssociationSet Name="FK_InventoryUser_InventoryUser" Association="SousChefModel.FK_InventoryUser_InventoryUser">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="InventoryUser" EntitySet="InventoryUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryUserSource_InventoryUser" Association="SousChefModel.FK_InventoryUserSource_InventoryUser">
+            <End Role="InventoryUser" EntitySet="InventoryUsers" />
+            <End Role="InventoryUserSource" EntitySet="InventoryUserSources" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Inventory">
           <Key>
@@ -218,19 +218,6 @@
           <Property Name="version" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="InventoryUsers" Relationship="SousChefModel.FK_InventoryUser_InventoryUser" FromRole="Inventory" ToRole="InventoryUser" />
         </EntityType>
-        <EntityType Name="InventoryUser">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="inventoryId" Type="Int32" Nullable="false" />
-          <Property Name="displayName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="isverified" Type="Boolean" Nullable="false" />
-          <Property Name="phoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Inventory" Relationship="SousChefModel.FK_InventoryUser_InventoryUser" FromRole="InventoryUser" ToRole="Inventory" />
-          <NavigationProperty Name="InventoryUserSources" Relationship="SousChefModel.FK_InventoryUserSource_InventoryUser" FromRole="InventoryUser" ToRole="InventoryUserSource" />
-        </EntityType>
         <EntityType Name="InventoryUserSource">
           <Key>
             <PropertyRef Name="id" />
@@ -239,9 +226,9 @@
           <Property Name="inventoryUserId" Type="Int32" Nullable="false" />
           <Property Name="sourceId" Type="Int32" Nullable="false" />
           <Property Name="accessKey" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="InventoryUser" Relationship="SousChefModel.FK_InventoryUserSource_InventoryUser" FromRole="InventoryUserSource" ToRole="InventoryUser" />
           <NavigationProperty Name="Source" Relationship="SousChefModel.FK_InventoryUserSource_Source" FromRole="InventoryUserSource" ToRole="Source" />
           <NavigationProperty Name="Receipts" Relationship="SousChefModel.FK_Receipt_InventoryUserSource" FromRole="InventoryUserSource" ToRole="Receipt" />
+          <NavigationProperty Name="InventoryUser" Relationship="SousChefModel.FK_InventoryUserSource_InventoryUser" FromRole="InventoryUserSource" ToRole="InventoryUser" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -283,30 +270,6 @@
           <Property Name="description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="InventoryUserSources" Relationship="SousChefModel.FK_InventoryUserSource_Source" FromRole="Source" ToRole="InventoryUserSource" />
         </EntityType>
-        <Association Name="FK_InventoryUser_InventoryUser">
-          <End Type="SousChefModel.Inventory" Role="Inventory" Multiplicity="1" />
-          <End Type="SousChefModel.InventoryUser" Role="InventoryUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Inventory">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="InventoryUser">
-              <PropertyRef Name="inventoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InventoryUserSource_InventoryUser">
-          <End Type="SousChefModel.InventoryUser" Role="InventoryUser" Multiplicity="1" />
-          <End Type="SousChefModel.InventoryUserSource" Role="InventoryUserSource" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InventoryUser">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="InventoryUserSource">
-              <PropertyRef Name="inventoryUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_InventoryUserSource_Source">
           <End Type="SousChefModel.Source" Role="Source" Multiplicity="1" />
           <End Type="SousChefModel.InventoryUserSource" Role="InventoryUserSource" Multiplicity="*" />
@@ -355,6 +318,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="InventoryUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventoryId" Type="Int32" Nullable="false" />
+          <Property Name="displayName" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="isVerified" Type="Boolean" Nullable="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Inventory" Relationship="SousChefModel.FK_InventoryUser_InventoryUser" FromRole="InventoryUser" ToRole="Inventory" />
+          <NavigationProperty Name="InventoryUserSources" Relationship="SousChefModel.FK_InventoryUserSource_InventoryUser" FromRole="InventoryUser" ToRole="InventoryUserSource" />
+        </EntityType>
+        <Association Name="FK_InventoryUser_InventoryUser">
+          <End Type="SousChefModel.Inventory" Role="Inventory" Multiplicity="1" />
+          <End Type="SousChefModel.InventoryUser" Role="InventoryUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryUser">
+              <PropertyRef Name="inventoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryUserSource_InventoryUser">
+          <End Type="SousChefModel.InventoryUser" Role="InventoryUser" Multiplicity="1" />
+          <End Type="SousChefModel.InventoryUserSource" Role="InventoryUserSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryUserSource">
+              <PropertyRef Name="inventoryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -366,18 +366,6 @@
               <MappingFragment StoreEntitySet="Inventory">
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InventoryUsers">
-            <EntityTypeMapping TypeName="SousChefModel.InventoryUser">
-              <MappingFragment StoreEntitySet="InventoryUser">
-                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
-                <ScalarProperty Name="isverified" ColumnName="isverified" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="displayName" ColumnName="displayName" />
-                <ScalarProperty Name="inventoryId" ColumnName="inventoryId" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -426,6 +414,18 @@
             <EntityTypeMapping TypeName="SousChefModel.Source">
               <MappingFragment StoreEntitySet="Source">
                 <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryUsers">
+            <EntityTypeMapping TypeName="SousChefModel.InventoryUser">
+              <MappingFragment StoreEntitySet="InventoryUser">
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="isVerified" ColumnName="isVerified" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="inventoryId" ColumnName="inventoryId" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -5,11 +5,11 @@ using System.Web;
 
 namespace SousChef.Models
 {
-    public class InventoryUserSource
+    public class InventoryUserSourceModel
     {
         public int id { get; set;}
         public int inventoryUserId { get; set; }
         public int sourceId { get; set; }
-        public int accessKey { get; set; }
+        public string accessKey { get; set; }
     }
 }

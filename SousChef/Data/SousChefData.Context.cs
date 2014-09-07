@@ -26,11 +26,11 @@ namespace SousChef.Data
         }
     
         public virtual DbSet<Inventory> Inventories { get; set; }
-        public virtual DbSet<InventoryUser> InventoryUsers { get; set; }
         public virtual DbSet<InventoryUserSource> InventoryUserSources { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Receipt> Receipts { get; set; }
         public virtual DbSet<ReceiptItem> ReceiptItems { get; set; }
         public virtual DbSet<Source> Sources { get; set; }
+        public virtual DbSet<InventoryUser> InventoryUsers { get; set; }
     }
 }

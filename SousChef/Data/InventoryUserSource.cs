@@ -24,8 +24,8 @@ namespace SousChef.Data
         public int sourceId { get; set; }
         public string accessKey { get; set; }
     
-        public virtual InventoryUser InventoryUser { get; set; }
         public virtual Source Source { get; set; }
         public virtual ICollection<Receipt> Receipts { get; set; }
+        public virtual InventoryUser InventoryUser { get; set; }
     }
 }

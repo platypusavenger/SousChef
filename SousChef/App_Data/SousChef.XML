@@ -396,6 +396,284 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="T:SousChef.Classes.ActionResultWithText">
+            <summary>
+            IHttpActionResult wrapper which includes a message for those that do not inherently support it.
+            </summary>
+        </member>
+        <member name="T:SousChef.Classes.ApiControllerExtensions">
+            <summary>
+            Add extension methods here for each base type you would like to add messaging to.
+            </summary>
+        </member>
+        <member name="M:SousChef.Classes.ApiControllerExtensions.NotFound(System.Web.Http.ApiController,System.String)">
+            <summary>
+            Standard NotFound response with added message
+            </summary>
+            <param name="controller"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SousChef.Controllers.InventoryController">
+            <summary>
+            Inventory Controller - Basic CRUD for Inventory
+            </summary>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryController.Get">
+            <summary>
+            An iQueryable Inventory lookup
+            </summary>
+            <returns>
+            200 - Success + A list of Inventory
+            401 - Not Authorized 
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryController.Get(System.Int32)">
+            <summary>
+            Retrieve a single Inventory from the database.
+            </summary>
+            <param name="id">The InventoryId of the Inventory to return.</param>
+            <returns>
+            200 - Success + The requested Inventory.
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryController.Put(System.Int32,SousChef.Models.InventoryModel)">
+            <summary>
+            Save changes to a single Inventory to the database.
+            </summary>
+            <param name="id">The InventoryId of the Inventory to save.</param>
+            <param name="inventoryModel">The model of the edited Inventory</param>
+            <returns>
+            204 - No Content
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryController.Post(SousChef.Models.InventoryModel)">
+            <summary>
+            A new Inventory to be added.
+            </summary>
+            <param name="inventoryModel">The new Inventory</param>
+            <returns>
+            201 - Created + The new Inventory
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryController.Delete(System.Int32)">
+            <summary>
+            Delete a Inventory from the database.
+            </summary>
+            <param name="id">The InventoryId of the Inventory to delete.</param>
+            <returns>
+            200 - Success + The deleted Inventory 
+            401 - Not Authorized 
+            405 - Method Not Allowed
+            500 - Internal Server Error + the Exception
+            </returns>
+        </member>
+        <member name="T:SousChef.Controllers.InventoryUserController">
+            <summary>
+            InventoryUser Controller - Basic CRUD for InventoryUser
+            </summary>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryUserController.Get">
+            <summary>
+            An iQueryable InventoryUser lookup
+            </summary>
+            <returns>
+            200 - Success + A list of InventoryUser
+            401 - Not Authorized 
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryUserController.Get(System.Int32)">
+            <summary>
+            Retrieve a single InventoryUser from the database.
+            </summary>
+            <param name="id">The InventoryUserId of the InventoryUser to return.</param>
+            <returns>
+            200 - Success + The requested InventoryUser.
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryUserController.Put(System.Int32,SousChef.Models.InventoryUserModel)">
+            <summary>
+            Save changes to a single InventoryUser to the database.
+            </summary>
+            <param name="id">The InventoryUserId of the InventoryUser to save.</param>
+            <param name="inventoryuserModel">The model of the edited InventoryUser</param>
+            <returns>
+            204 - No Content
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryUserController.Post(SousChef.Models.InventoryUserModel)">
+            <summary>
+            A new InventoryUser to be added.
+            </summary>
+            <param name="inventoryuserModel">The new InventoryUser</param>
+            <returns>
+            201 - Created + The new InventoryUser
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryUserController.Delete(System.Int32)">
+            <summary>
+            Delete a InventoryUser from the database.
+            </summary>
+            <param name="id">The InventoryUserId of the InventoryUser to delete.</param>
+            <returns>
+            200 - Success + The deleted InventoryUser 
+            401 - Not Authorized 
+            405 - Method Not Allowed
+            500 - Internal Server Error + the Exception
+            </returns>
+        </member>
+        <member name="T:SousChef.Controllers.InventoryUserSourceController">
+            <summary>
+            InventoryUserSource Controller - Basic CRUD for InventoryUserSource
+            </summary>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryUserSourceController.Get">
+            <summary>
+            An iQueryable InventoryUserSource lookup
+            </summary>
+            <returns>
+            200 - Success + A list of InventoryUserSource
+            401 - Not Authorized 
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryUserSourceController.Get(System.Int32)">
+            <summary>
+            Retrieve a single InventoryUserSource from the database.
+            </summary>
+            <param name="id">The InventoryUserSourceId of the InventoryUserSource to return.</param>
+            <returns>
+            200 - Success + The requested InventoryUserSource.
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryUserSourceController.Put(System.Int32,SousChef.Models.InventoryUserSourceModel)">
+            <summary>
+            Save changes to a single InventoryUserSource to the database.
+            </summary>
+            <param name="id">The InventoryUserSourceId of the InventoryUserSource to save.</param>
+            <param name="inventoryusersourceModel">The model of the edited InventoryUserSource</param>
+            <returns>
+            204 - No Content
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryUserSourceController.Post(SousChef.Models.InventoryUserSourceModel)">
+            <summary>
+            A new InventoryUserSource to be added.
+            </summary>
+            <param name="inventoryusersourceModel">The new InventoryUserSource</param>
+            <returns>
+            201 - Created + The new InventoryUserSource
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryUserSourceController.Delete(System.Int32)">
+            <summary>
+            Delete a InventoryUserSource from the database.
+            </summary>
+            <param name="id">The InventoryUserSourceId of the InventoryUserSource to delete.</param>
+            <returns>
+            200 - Success + The deleted InventoryUserSource 
+            401 - Not Authorized 
+            405 - Method Not Allowed
+            500 - Internal Server Error + the Exception
+            </returns>
+        </member>
+        <member name="T:SousChef.Controllers.ItemController">
+            <summary>
+            Item Controller - Basic CRUD for Item
+            </summary>
+        </member>
+        <member name="M:SousChef.Controllers.ItemController.Get">
+            <summary>
+            An iQueryable Item lookup
+            </summary>
+            <returns>
+            200 - Success + A list of Item
+            401 - Not Authorized 
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ItemController.Get(System.Int32)">
+            <summary>
+            Retrieve a single Item from the database.
+            </summary>
+            <param name="id">The ItemId of the Item to return.</param>
+            <returns>
+            200 - Success + The requested Item.
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ItemController.Put(System.Int32,SousChef.Models.ItemModel)">
+            <summary>
+            Save changes to a single Item to the database.
+            </summary>
+            <param name="id">The ItemId of the Item to save.</param>
+            <param name="itemModel">The model of the edited Item</param>
+            <returns>
+            204 - No Content
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ItemController.Post(SousChef.Models.ItemModel)">
+            <summary>
+            A new Item to be added.
+            </summary>
+            <param name="itemModel">The new Item</param>
+            <returns>
+            201 - Created + The new Item
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ItemController.Delete(System.Int32)">
+            <summary>
+            Delete a Item from the database.
+            </summary>
+            <param name="id">The ItemId of the Item to delete.</param>
+            <returns>
+            200 - Success + The deleted Item 
+            401 - Not Authorized 
+            405 - Method Not Allowed
+            500 - Internal Server Error + the Exception
+            </returns>
+        </member>
         <member name="T:SousChef.Controllers.PostmanController">
             <summary>
             Serialize the API to a Postman-importable format
@@ -406,6 +684,197 @@
             Return a map of all API calls crawled by the ApiExplorer
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:SousChef.Controllers.ReceiptController">
+            <summary>
+            Receipt Controller - Basic CRUD for Receipt
+            </summary>
+        </member>
+        <member name="M:SousChef.Controllers.ReceiptController.Get">
+            <summary>
+            An iQueryable Receipt lookup
+            </summary>
+            <returns>
+            200 - Success + A list of Receipt
+            401 - Not Authorized 
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ReceiptController.Get(System.Int32)">
+            <summary>
+            Retrieve a single Receipt from the database.
+            </summary>
+            <param name="id">The ReceiptId of the Receipt to return.</param>
+            <returns>
+            200 - Success + The requested Receipt.
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ReceiptController.Put(System.Int32,SousChef.Models.ReceiptModel)">
+            <summary>
+            Save changes to a single Receipt to the database.
+            </summary>
+            <param name="id">The ReceiptId of the Receipt to save.</param>
+            <param name="receiptModel">The model of the edited Receipt</param>
+            <returns>
+            204 - No Content
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ReceiptController.Post(SousChef.Models.ReceiptModel)">
+            <summary>
+            A new Receipt to be added.
+            </summary>
+            <param name="receiptModel">The new Receipt</param>
+            <returns>
+            201 - Created + The new Receipt
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ReceiptController.Delete(System.Int32)">
+            <summary>
+            Delete a Receipt from the database.
+            </summary>
+            <param name="id">The ReceiptId of the Receipt to delete.</param>
+            <returns>
+            200 - Success + The deleted Receipt 
+            401 - Not Authorized 
+            405 - Method Not Allowed
+            500 - Internal Server Error + the Exception
+            </returns>
+        </member>
+        <member name="T:SousChef.Controllers.ReceiptItemController">
+            <summary>
+            ReceiptItem Controller - Basic CRUD for ReceiptItem
+            </summary>
+        </member>
+        <member name="M:SousChef.Controllers.ReceiptItemController.Get">
+            <summary>
+            An iQueryable ReceiptItem lookup
+            </summary>
+            <returns>
+            200 - Success + A list of ReceiptItem
+            401 - Not Authorized 
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ReceiptItemController.Get(System.Int32)">
+            <summary>
+            Retrieve a single ReceiptItem from the database.
+            </summary>
+            <param name="id">The ReceiptItemId of the ReceiptItem to return.</param>
+            <returns>
+            200 - Success + The requested ReceiptItem.
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ReceiptItemController.Put(System.Int32,SousChef.Models.ReceiptItemModel)">
+            <summary>
+            Save changes to a single ReceiptItem to the database.
+            </summary>
+            <param name="id">The ReceiptItemId of the ReceiptItem to save.</param>
+            <param name="receiptitemModel">The model of the edited ReceiptItem</param>
+            <returns>
+            405 - Method Not Allowed
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ReceiptItemController.Post(SousChef.Models.ReceiptItemModel)">
+            <summary>
+            A new ReceiptItem to be added.
+            </summary>
+            <param name="receiptitemModel">The new ReceiptItem</param>
+            <returns>
+            201 - Created + The new ReceiptItem
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.ReceiptItemController.Delete(System.Int32)">
+            <summary>
+            Delete a ReceiptItem from the database.
+            </summary>
+            <param name="id">The ReceiptItemId of the ReceiptItem to delete.</param>
+            <returns>
+            200 - Success + The deleted ReceiptItem 
+            401 - Not Authorized 
+            405 - Method Not Allowed
+            500 - Internal Server Error + the Exception
+            </returns>
+        </member>
+        <member name="T:SousChef.Controllers.SourceController">
+            <summary>
+            Source Controller - Basic CRUD for Source
+            </summary>
+        </member>
+        <member name="M:SousChef.Controllers.SourceController.Get">
+            <summary>
+            An iQueryable Source lookup
+            </summary>
+            <returns>
+            200 - Success + A list of Source
+            401 - Not Authorized 
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.SourceController.Get(System.Int32)">
+            <summary>
+            Retrieve a single Source from the database.
+            </summary>
+            <param name="id">The SourceId of the Source to return.</param>
+            <returns>
+            200 - Success + The requested Source.
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.SourceController.Put(System.Int32,SousChef.Models.SourceModel)">
+            <summary>
+            Save changes to a single Source to the database.
+            </summary>
+            <param name="id">The SourceId of the Source to save.</param>
+            <param name="sourceModel">The model of the edited Source</param>
+            <returns>
+            204 - No Content
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.SourceController.Post(SousChef.Models.SourceModel)">
+            <summary>
+            A new Source to be added.
+            </summary>
+            <param name="sourceModel">The new Source</param>
+            <returns>
+            201 - Created + The new Source
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.SourceController.Delete(System.Int32)">
+            <summary>
+            Delete a Source from the database.
+            </summary>
+            <param name="id">The SourceId of the Source to delete.</param>
+            <returns>
+            200 - Success + The deleted Source 
+            401 - Not Authorized 
+            405 - Method Not Allowed
+            500 - Internal Server Error + the Exception
+            </returns>
         </member>
     </members>
 </doc>

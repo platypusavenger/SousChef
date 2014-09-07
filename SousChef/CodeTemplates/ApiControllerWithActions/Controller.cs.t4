@@ -25,8 +25,10 @@ namespace <#= Namespace #>
     /// <summary>
     /// <#= ControllerRootName #> Controller - Basic CRUD for <#= ControllerRootName #>
     /// </summary>
-    public class <#= ControllerName #> : BaseStaffingController
+    public class <#= ControllerName #> : ApiController
     {
+	
+		private SousChefEntities _db = new SousChefEntities();
 
         // GET api/<#= ControllerRootName #>/
         /// <summary>
@@ -39,7 +41,7 @@ namespace <#= Namespace #>
         /// </returns>
         public IQueryable<<#= ControllerRootName #>Model> Get()
         {
-            return Db.<#= ControllerRootName #>s.Select(o => new <#= ControllerRootName #>Model
+            return _db.<#= ControllerRootName #>s.Select(o => new <#= ControllerRootName #>Model
             {
                 // TODO: Projection into DTO
             });
@@ -95,12 +97,12 @@ namespace <#= Namespace #>
             try
             {
 				// TODO: Retrieve and update a <#= ControllerRootName #>
-                <#= ControllerRootName #> <#= pathFragment #> = Db.<#= ControllerRootName #>s.FirstOrDefault(o => o.id == id);
+                <#= ControllerRootName #> <#= pathFragment #> = _db.<#= ControllerRootName #>s.FirstOrDefault(o => o.id == id);
 				if (<#= pathFragment #> == null)
                     throw new APIException("<#= ControllerRootName #> not found.", 404);
 				// ... set field values
-                Db.Entry(<#= pathFragment #>).State = EntityState.Modified;
-                Db.SaveChanges();
+                _db.Entry(<#= pathFragment #>).State = EntityState.Modified;
+                _db.SaveChanges();
                 return StatusCode(HttpStatusCode.NoContent);
             }
             catch (APIException ex)
@@ -141,8 +143,8 @@ namespace <#= Namespace #>
 				// TODO: Create and populate new <#= ControllerRootName #>
                 <#= ControllerRootName #> <#= pathFragment #> = new <#= ControllerRootName #>();
                 // ... set field values
-				Db.<#= ControllerRootName #>s.Add(<#= pathFragment #>);
-                Db.SaveChanges();
+				_db.<#= ControllerRootName #>s.Add(<#= pathFragment #>);
+                _db.SaveChanges();
 
                 <#= pathFragment #>Model.id = <#= pathFragment #>.id;
 
@@ -178,15 +180,15 @@ namespace <#= Namespace #>
             try {
 				// For Objects which cannot be deleted:
 				// return StatusCode(HttpStatusCode.MethodNotAllowed);  // Update Return Codes
-				<#= ControllerRootName #> <#= pathFragment #> = Db.<#= ControllerRootName #>s.Find(id);
+				<#= ControllerRootName #> <#= pathFragment #> = _db.<#= ControllerRootName #>s.Find(id);
 				if (<#= pathFragment #> == null)
 				{
 					return this.NotFound("<#= ControllerRootName #> not found.");
 				}
 
                 <#= ControllerRootName #>Model returnModel = Get().FirstOrDefault<<#= ControllerRootName #>Model>(o => o.id == id);
-                Db.<#= ControllerRootName #>s.Remove(<#= pathFragment #>);
-                Db.SaveChanges();
+                _db.<#= ControllerRootName #>s.Remove(<#= pathFragment #>);
+                _db.SaveChanges();
 
                 return Ok(returnModel);
             }

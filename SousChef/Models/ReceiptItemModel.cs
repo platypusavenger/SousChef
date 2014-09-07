@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SousChef.Models
 {
-    public class ReceiptItem
+    public class ReceiptItemModel
     {
         public int id { get; set; }
         public int receiptId { get; set; }

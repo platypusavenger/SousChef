@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SousChef.Models
 {
-    public class InventoryUser
+    public class InventoryUserModel
     {
         public int id { get; set; }
         public int inventoryId { get; set; }

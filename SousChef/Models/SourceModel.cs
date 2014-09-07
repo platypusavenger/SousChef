@@ -5,10 +5,9 @@ using System.Web;
 
 namespace SousChef.Models
 {
-    public class Receipt
-    {
+	public class SourceModel
+	{
         public int id { get; set; }
-        public int inventoryUserSourceId { get; set; }
-        public DateTime timestamp { get; set; }
-    }
+        public string description { get; set; }
+	}
 }

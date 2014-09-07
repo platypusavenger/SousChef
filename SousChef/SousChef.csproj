@@ -137,9 +137,7 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -159,8 +157,18 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Classes\ActionResultWithText.cs" />
+    <Compile Include="Classes\APIException.cs" />
+    <Compile Include="Classes\Utils.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\InventoryUserController.cs" />
+    <Compile Include="Controllers\InventoryUserSourceController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PostmanController.cs" />
+    <Compile Include="Controllers\ReceiptController.cs" />
+    <Compile Include="Controllers\ReceiptItemController.cs" />
+    <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Data\Inventory.cs">
       <DependentUpon>SousChefData.tt</DependentUpon>
     </Compile>
@@ -200,16 +208,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Inventory.cs" />
-    <Compile Include="Models\InventoryUser.cs" />
-    <Compile Include="Models\InventoryUserSource.cs" />
-    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\InventoryModel.cs" />
+    <Compile Include="Models\InventoryUserModel.cs" />
+    <Compile Include="Models\InventoryUserSourceModel.cs" />
+    <Compile Include="Models\ItemModel.cs" />
     <Compile Include="Models\PostmanModel.cs" />
-    <Compile Include="Models\Receipt.cs" />
-    <Compile Include="Models\ReceiptItem.cs" />
+    <Compile Include="Models\ReceiptModel.cs" />
+    <Compile Include="Models\ReceiptItemModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\SousChef.XML" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -246,8 +255,8 @@
       <DependentUpon>SousChefData.edmx</DependentUpon>
       <LastGenOutput>SousChefData.cs</LastGenOutput>
     </Content>
-    <Content Include="CodeTemplates\ApiControllerWithActions\Controller.cs.tt4" />
-    <Compile Include="Models\Source.cs" />
+    <None Include="CodeTemplates\ApiControllerWithActions\Controller.cs.t4" />
+    <Compile Include="Models\SourceModel.cs" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

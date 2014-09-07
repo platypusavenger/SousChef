@@ -23,7 +23,7 @@ namespace SousChef.Data
         public int inventoryId { get; set; }
         public string displayName { get; set; }
         public string email { get; set; }
-        public bool isverified { get; set; }
+        public bool isVerified { get; set; }
         public string phoneNumber { get; set; }
     
         public virtual Inventory Inventory { get; set; }
