@@ -13,8 +13,14 @@ namespace SousChef.Models
         public string version { get; set; }
     }
 
-    public class InventoryModelDetailed : InventoryModel
+    public class InventoryModelCurrent : InventoryModel
     {
         public List<InventoryItem> InventoryItems { get; set; }
     }
+
+    public class InventoryModelNeeded : InventoryModel
+    {
+        public List<InventoryShoppingListItem> InventoryItems { get; set; }
+    }
+
 }

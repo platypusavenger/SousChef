@@ -175,7 +175,7 @@
     <Compile Include="Controllers\ReceiptController.cs" />
     <Compile Include="Controllers\ReceiptItemController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TextToSpeechController.cs" />
     <Compile Include="Data\Inventory.cs">
       <DependentUpon>SousChefData.tt</DependentUpon>
     </Compile>
@@ -305,6 +305,7 @@
     <Content Include="Scripts\angular-cookies.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <None Include="Properties\PublishProfiles\Bench Server.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />

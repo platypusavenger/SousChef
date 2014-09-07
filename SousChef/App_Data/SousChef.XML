@@ -576,9 +576,20 @@
             404 - Not Found + Reason
             </returns>
         </member>
-        <member name="M:SousChef.Controllers.InventoryController.GetDetailed(System.Int32)">
+        <member name="M:SousChef.Controllers.InventoryController.GetCurrent(System.Int32)">
             <summary>
-            Retrieve a single Inventory from the database.
+            Retrieve a single Current Inventory from the database.
+            </summary>
+            <param name="id">The InventoryId of the Inventory to return.</param>
+            <returns>
+            200 - Success + The requested Inventory.
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryController.GetNeeded(System.Int32)">
+            <summary>
+            Retrieve a single Current Inventory from the database.
             </summary>
             <param name="id">The InventoryId of the Inventory to return.</param>
             <returns>
@@ -1097,9 +1108,9 @@
             500 - Internal Server Error + the Exception
             </returns>
         </member>
-        <member name="M:SousChef.Controllers.TestController.Get(System.String)">
+        <member name="M:SousChef.Controllers.TextToSpeechController.Get(System.String)">
             <summary>
-            A test stub for Text To Speech
+            A pass-through for Text To Speech
             </summary>
             <returns>
             200 - Success + An HTML fragment to test

@@ -63,9 +63,9 @@ namespace SousChef.Controllers
             return Ok(inventory);
         }
 
-        // Get api/Inventory/Detailed/5
+        // Get api/Inventory/Current/5
         /// <summary>
-        /// Retrieve a single Inventory from the database.
+        /// Retrieve a single Current Inventory from the database.
         /// </summary>
         /// <param name="id">The InventoryId of the Inventory to return.</param>
         /// <returns>
@@ -73,9 +73,9 @@ namespace SousChef.Controllers
         /// 401 - Not Authorized 
         /// 404 - Not Found + Reason
         /// </returns>
-        [ResponseType(typeof(InventoryModelDetailed))]
-        [Route("api/Inventory/Detailed/{id:int}")]
-        public IHttpActionResult GetDetailed(int id)
+        [ResponseType(typeof(InventoryModelCurrent))]
+        [Route("api/Inventory/Current/{id:int}")]
+        public IHttpActionResult GetCurrent(int id)
         {
             InventoryModel inventory = Get().FirstOrDefault<InventoryModel>(o => o.id == id);
             if (inventory == null)
@@ -83,7 +83,7 @@ namespace SousChef.Controllers
                 return this.NotFound("Inventory not found.");
             }
 
-            InventoryModelDetailed detailed = new InventoryModelDetailed();
+            InventoryModelCurrent detailed = new InventoryModelCurrent();
             detailed.id = inventory.id;
             detailed.description = inventory.description;
             detailed.version = inventory.version;
@@ -91,6 +91,33 @@ namespace SousChef.Controllers
             return Ok(detailed);
         }
 
+        // Get api/Inventory/Needed/5
+        /// <summary>
+        /// Retrieve a single Current Inventory from the database.
+        /// </summary>
+        /// <param name="id">The InventoryId of the Inventory to return.</param>
+        /// <returns>
+        /// 200 - Success + The requested Inventory.
+        /// 401 - Not Authorized 
+        /// 404 - Not Found + Reason
+        /// </returns>
+        [ResponseType(typeof(InventoryModelNeeded))]
+        [Route("api/Inventory/Needed/{id:int}")]
+        public IHttpActionResult GetNeeded(int id)
+        {
+            InventoryModel inventory = Get().FirstOrDefault<InventoryModel>(o => o.id == id);
+            if (inventory == null)
+            {
+                return this.NotFound("Inventory not found.");
+            }
+
+            InventoryModelNeeded detailed = new InventoryModelNeeded();
+            detailed.id = inventory.id;
+            detailed.description = inventory.description;
+            detailed.version = inventory.version;
+            detailed.InventoryItems = _db.InventoryShoppingListItems.Where(o => o.id == id).ToList<InventoryShoppingListItem>();
+            return Ok(detailed);
+        }
 
         // PUT api/Inventory/5
         /// <summary>

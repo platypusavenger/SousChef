@@ -1,37 +1,61 @@
-﻿<div class="row">
-    <div id="recipes-nav" class="col-md-4 top-menu" onclick="navClick('recipes-nav');">
-        <h5>RECIPES</h5>
+﻿<div class="body-wrapper" ng-app="sousChefApp" ng-controller="FridgeCtrl">
+    <div class="row">
+        <div id="recipes-nav" class="col-md-4 top-menu" ng-click="navClick('recipes-nav');">
+            <h5>RECIPES</h5>
+        </div>
+        <div id="inventory-nav" class="col-md-4 top-menu top-menu-selected" ng-click="navClick('inventory-nav')">
+            <h5>MY INVENTORY</h5>
+        </div>
+        <div id="shopping-nav" class="col-md-4 top-menu" ng-click="navClick('shopping-nav')">
+            <h5>SHOPPING LIST</h5>
+        </div>
     </div>
-    <div id="inventory-nav" class="col-md-4 top-menu top-menu-selected" onclick="navClick('inventory-nav')">
-        <h5>MY INVENTORY</h5>
+    <div class="sous-logo-container">
+        <div class="sous-logo"><img src="../Content/SousChefLogo.png" /></div>
+        <div class="shopping-logo" hidden><img src="../Content/ShoppingList.png" /></div>
+        <div class="top-menu-selected-text"><h4 id="menu-text">My Inventory</h4></div>
     </div>
-    <div id="shopping-nav" class="col-md-4 top-menu" onclick="navClick('shopping-nav')">
-        <h5>SHOPPING LIST</h5>
+    <div class="body-container">
+        <div id="recipes-body"></div>
+        <div id="inventory-body"></div>
+        <div id="shopping-body"></div>
     </div>
-</div>
-<div class="sous-logo-container">
-    <div class="sous-logo"><img src="../Content/SousChefLogo.png" /></div>
-    <div class="shopping-logo" hidden><img src="../Content/ShoppingList.png" /></div>
-    <div class="top-menu-selected-text"><h4 id="menu-text">My Inventory</h4></div>
-</div>
-<div class="body-container">
-    <div id="recipes-body"></div>
-    <div id="inventory-body"></div>
-    <div id="shopping-body"></div>
 </div>
 <script>
-    function navClick(target) {
-        $('.top-menu-selected').toggleClass('top-menu-selected'); 
-        $('#' + target).toggleClass('top-menu-selected');
-        if (target == "recipes-nav") {
-            $("#menu-text").text("Recipes");
-            $(".shopping-logo").hide();
-        } else if (target == "inventory-nav") {
-            $("#menu-text").text("My Inventory");
-            $(".shopping-logo").hide();
-        } else {
-            $("#menu-text").text("Shopping List");
-            $(".shopping-logo").show();
-        }
-    }
+
+    angular.module('sousChefApp', []).controller('FridgeCtrl', function ($scope, $http) {
+        $scope.inventoryId = 1;
+        $scope.shoppingList = {};
+
+        $scope.fetchCurrentInventory = function () {
+            $http.get(base_url + '/api/portfolio?$filter=isactive eq true').success(function (portfolios) {
+                $scope.portfolios = portfolios;
+                checkResolve();
+            }).error(utilities.httpError);
+        };
+
+        $scope.fetchShoppingList = function () {
+            $http.get(base_url + '/api/portfolio?$filter=isactive eq true').success(function (portfolios) {
+                $scope.portfolios = portfolios;
+                checkResolve();
+            }).error(utilities.httpError);
+        };
+
+        $scope.navClick = function (target) {
+            $('.top-menu-selected').toggleClass('top-menu-selected');
+            $('#' + target).toggleClass('top-menu-selected');
+            if (target == "recipes-nav") {
+                $("#menu-text").text("Recipes");
+                $(".shopping-logo").hide();
+            } else if (target == "inventory-nav") {
+                $("#menu-text").text("My Inventory");
+                $(".shopping-logo").hide();
+            } else {
+                $("#menu-text").text("Shopping List");
+                $(".shopping-logo").show();
+            }
+        };
+
+    });
+
 </script>
