@@ -32,6 +32,7 @@ namespace SousChef.Controllers
             string result = "<audio controls='controls' autobuffer='autobuffer' autoplay='autoplay' id='audioPlay' src='data:audio/wav;base64," + value + "'></audio>";
             return Ok(result);
         }
+        
         [HttpGet]
         [Route("api/texttospeech/fakeSomeData")]
         public IHttpActionResult FakeSomeData()
@@ -63,17 +64,17 @@ namespace SousChef.Controllers
 
             for (int i = 0; i < 5; i++)
             {
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + leaderStartLat + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower1 + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + follower1StartLat + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower2 + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + follower2StartLat + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/steering_wheel_angle/value { 'at': '" + startTime + "', 'value': '" + leaderSteering + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + leaderStartLat + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower1 + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + follower1StartLat + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower2 + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + follower2StartLat + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/steering_wheel_angle/value { 'at': '" + startTime + "', 'value': '" + leaderSteering + "'}");
                 result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/speed/value { 'at': '" + startTime + "', 'value': '" + leaderSpeed + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/longitude/value { 'at': '" + startTime + "', 'value': '" + leaderStartLong + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower1 + @"/streams/longitude/value { 'at': '" + startTime + "', 'value': '" + follower1StartLong + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower2 + @"/streams/longitude/value { 'at': '" + startTime + "', 'value': '" + follower2StartLong + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + leaderFuel + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower1 + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + follower1Fuel + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower2 + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + follower2Fuel + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/longitude/value { 'at': '" + startTime + "', 'value': '" + leaderStartLong + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower1 + @"/streams/longitude/value { 'at': '" + startTime + "', 'value': '" + follower1StartLong + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower2 + @"/streams/longitude/value { 'at': '" + startTime + "', 'value': '" + follower2StartLong + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + leaderFuel + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower1 + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + follower1Fuel + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower2 + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + follower2Fuel + "'}");
 
                 newTime = DateTime.Parse(startTime);
                 newTime = newTime.AddMinutes(1.00);
@@ -85,19 +86,20 @@ namespace SousChef.Controllers
                 follower2StartLat = (double.Parse(follower2StartLat) - Math.Abs((double.Parse(leaderStartLat) - double.Parse(follower2StartLat)) / 5)).ToString();
                 follower2StartLong = (double.Parse(follower2StartLat) - Math.Abs((double.Parse(leaderStartLat) - double.Parse(follower2StartLat)) / 5)).ToString();
                 Random random = new Random();
-                leaderSpeed = (60 + random.Next(-5, 15)).ToString();
+                leaderSpeed = (4400 + random.Next(-1000, 1200)).ToString();
                 leaderSteering = (180 + random.Next(-5, 5)).ToString();
+                System.Threading.Thread.Sleep(150);
             }
 
             for (int i = 0; i < 1000; i++)
             {
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + leaderStartLat + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/longitude/value { 'at': '" + startTime + "', 'value': '" + leaderStartLong + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/steering_wheel_angle/value { 'at': '" + startTime + "', 'value': '" + leaderSteering + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + leaderStartLat + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/longitude/value { 'at': '" + startTime + "', 'value': '" + leaderStartLong + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/steering_wheel_angle/value { 'at': '" + startTime + "', 'value': '" + leaderSteering + "'}");
                 result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/speed/value { 'at': '" + startTime + "', 'value': '" + leaderSpeed + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + leaderFuel + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower1 + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + leaderFuel + "'}");
-                result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower2 + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + leaderFuel + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + leaderFuel + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower1 + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + leaderFuel + "'}");
+                //result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower2 + @"/streams/fuel_usage/value { 'at': '" + startTime + "', 'value': '" + leaderFuel + "'}");
                 
                 newTime = DateTime.Parse(startTime);
                 newTime = newTime.AddMinutes(1.00);
@@ -105,7 +107,7 @@ namespace SousChef.Controllers
                 leaderStartLat = (double.Parse(leaderStartLat) - 0.05).ToString();
                 leaderStartLong = (double.Parse(leaderStartLong) - 0.01).ToString();
                 Random random = new Random();
-                leaderSpeed = (60 + random.Next(-5, 15)).ToString();
+                leaderSpeed = (4400 + random.Next(-1000, 1200)).ToString();
                 leaderSteering = (180 + random.Next(-5, 5)).ToString();
 
                 if (i % 5 == 0)
@@ -114,6 +116,7 @@ namespace SousChef.Controllers
                     follower1Fuel = (int.Parse(follower1Fuel) - 1).ToString();
                     follower2Fuel = (int.Parse(follower2Fuel) - 1).ToString();
                 }
+                System.Threading.Thread.Sleep(150);
             }
 
                 return Ok(result);

@@ -21,11 +21,12 @@
                 <tr>
                     <td class="recipe-outer" ng-repeat="item in recipes">
                         <table class="recipe">
-                            <tr><td colspan="2"><img src="{{ item.ImageURL }}"  ng-click="speechClick(item.Title)" /><br/>{{ item.Title }}</td></tr>
-                            <tr><td colspan="2">{{ item.Description }}</td></tr>
+                            <tr><td><img src="{{ item.ImageURL }}"  ng-click="speechClick(item.Title)" /><br/>{{ item.Title }}</td></tr>
+                            <tr><td>{{ item.Description }}</td></tr>
                             <tr>
-                                <td><ul><li ng-repeat="oneIngredient in item.Ingredients">{{oneIngredient.Quantity}} {{oneIngredient.Measure}} of {{oneIngredient.Item}} <br/>{{oneIngredient.Description}}</li></ul></td>
-                                <td><ul><li ng-repeat="oneStep in item.Directions">{{oneStep}}</li></ul></td>
+                                <td>
+                                    <ul style="float:left;"><li ng-repeat="oneIngredient in item.Ingredients">{{oneIngredient.Quantity}} {{oneIngredient.Measure}} of {{oneIngredient.Item}} <br />{{oneIngredient.Description}}</li></ul>
+                                    <ul><li ng-repeat="oneStep in item.Directions track by $index">{{oneStep}}</li></ul></td>
                             </tr>
                         </table>
                     </td>
@@ -82,7 +83,7 @@
         $scope.recipes = [
                 {
                     "Title": "Smoky Fried Chickpeas",
-                    "Description": "I was making a sort of Spanish/Moroccan Moorish sort of dinner for friends one night, and was looking for something small and spicy and crunchy to serve with drinks I thought I had almonds, but had run out but I did have a can of chickpeas..and inspiration struck.",
+                    "Description": "I was making a sort of Spanish/Moroccan Moorish sort of dinner for friends one night, and was looking for something small and spicy.",
                     "Ingredients": [
                         {
                             "Quantity": 2,
@@ -122,51 +123,24 @@
                         }
                     ],
                     "Directions": [
-                        {
-                            "1": "Drain Chickpeas and set on paper towels over a colander to dry throughly (can be done 1 day in advance)."
-                        },
-                        {
-                            "2": "Heat oil in large pan (preferably cast iron) to 355 or until oil makes bubbles around 1 chickpea."
-                        },
-                        {
-                            "3": "Add lemon zest, thyme sprig, chickpeas in batches so pan doesn't crowd fry about 5 minutes until crunchy color & changes."
-                        },
-                        {
-                            "4": "Remove from oil, drain well over colander/sieve, add garlic, fry till golden."
-                        },
-                        {
-                            "5": "Toss with smoked paprika & salt, add more if necessary. Serve warm."
-                        }
+                            "Drain Chickpeas and set on paper towels over a colander to dry throughly (can be done 1 day in advance).",
+                            "Heat oil in large pan (preferably cast iron) to 355 or until oil makes bubbles around 1 chickpea.",
+                            "Add lemon zest, thyme sprig, chickpeas in batches so pan doesn't crowd fry about 5 minutes until crunchy color & changes.",
+                            "Remove from oil, drain well over colander/sieve, add garlic, fry till golden.",
+                            "Toss with smoked paprika & salt, add more if necessary. Serve warm.",
+                            "Add the kale and the tortellini, and continue to cook over a simmer until both are tender and cooked through, 5 to 7 minutes."
                     ],
                     "ImageURL": "https://d2k9njawademcf.cloudfront.net/indeximages/20409/original/100609F_0781.JPG?1403259485"
                 },
                 {
                     "Title": "Smoky Minestrone with Tortellini and Parsley",
-                    "Description": "I was making a sort of Spanish/Moroccan Moorish sort of dinner for friends one night, and was looking for something small and spicy and crunchy to serve with drinks I thought I had almonds, but had run out but I did have a can of chickpeas..and inspiration struck.",
+                    "Description": "Toss with smoked paprika & salt, add more if necessary for a little heat. Serve warm",
                     "Ingredients": [
-                        {
-                            "Quantity": 2,
-                            "Measure": "Tablespoons",
-                            "Item": "Olive Oil",
-                            "Description": ""
-                        },
-                        {
-                            "Quantity": 2,
-                            "Measure": "Slices",
-                            "Item": "Bacon",
-                            "Description": "Chopped into small pieces"
-                        },
                         {
                             "Quantity": 1,
                             "Measure": "Large",
                             "Item": "Onion",
                             "Description": "Peeled and Chopped"
-                        },
-                        {
-                            "Quantity": 2,
-                            "Measure": "Large Cloves",
-                            "Item": "Garlic",
-                            "Description": "Minced"
                         },
                         {
                             "Quantity": 1,
@@ -175,27 +149,9 @@
                             "Description": "Trimmed and sliced thinly"
                         },
                         {
-                            "Quantity": 3,
-                            "Measure": "",
-                            "Item": "Carrots",
-                            "Description": "Peeled and chopped"
-                        },
-                        {
-                            "Quantity": 1,
-                            "Measure": "",
-                            "Item": "Zucchini",
-                            "Description": "Chopped"
-                        },
-                        {
                             "Quantity": 1,
                             "Measure": "",
                             "Item": "Potato",
-                            "Description": "Peeled and chopped"
-                        },
-                        {
-                            "Quantity": 4,
-                            "Measure": "Cups",
-                            "Item": "Vegetable Stock",
                             "Description": "Peeled and chopped"
                         },
                         {
@@ -212,12 +168,6 @@
                         },
                         {
                             "Quantity": 1,
-                            "Measure": "",
-                            "Item": "Salt",
-                            "Description": "To taste"
-                        },
-                        {
-                            "Quantity": 1,
                             "Measure": "Cup",
                             "Item": "Kale",
                             "Description": "Chopped fine"
@@ -231,32 +181,14 @@
                         {
                             "Quantity": 1,
                             "Measure": "",
-                            "Item": "Aged Balsamic Vinegar",
-                            "Description": "For drizzling"
-                        },
-                        {
-                            "Quantity": 1,
-                            "Measure": "",
                             "Item": "Grated Parmesian Cheese",
                             "Description": "For Garnish"
                         }
                     ],
                     "Directions": [
-                        {
-                            "1": "Heat 1 tablespoon of the olive oil in a large pot over medium heat. Add the bacon pieces and cook for a couple of minutes, until they start to brown."
-                        },
-                        {
-                            "2": "Add 2 more tablespoons of oil along with the chopped onion, garlic and leek. Continue to cook, strirring occasionally, over medium heat until softened."
-                        },
-                        {
-                            "3": "Add the chopped carrot, celery, zucchini, potato and stir around for a minute or two."
-                        },
-                        {
-                            "4": "Add the stock, the chickpeas, and then the tomatoes, crushing them with your hands as you go. Add a few generous pinches of salt (be judicious if your stock is salted already). Bring the soup to a boil, then reduce the heat to a simmer and cook for 30-40 minutes, until the potatoes are just tender."
-                        },
-                        {
-                            "5": "Add the kale and the tortellini, and continue to cook over a simmer until both are tender and cooked through, 5 to 7 minutes. Taste and add more salt if necessary. Serve garnished with a spoonful of the pesto, a few drops of the aged balsamic, and a generous sprinkling of grated Parmesan cheese, if desired."
-                        }
+                        "Heat 1 tablespoon of the olive oil in a large pot over medium heat. Add the bacon pieces and cook for a couple of minutes, until they start to brown.",
+                        "Add 2 more tablespoons of oil along with the chopped onion, garlic and leek. Continue to cook, strirring occasionally, over medium heat until softened.",
+                        "Bring the soup to a boil, then reduce the heat to a simmer and cook for 30-40 minutes, until the potatoes are just tender."
                     ],
                     "ImageURL": "https://d2k9njawademcf.cloudfront.net/slides/2478/original/052510F_415.JPG?1274843657"
                 },
@@ -326,15 +258,10 @@
                         }
                     ],
                     "Directions": [
-                        {
-                            "1": "In a large non-stick pan, sauté pancetta, stirring frequently, over medium heat, until crisp and lightly golden."
-                        },
-                        {
-                            "2": "Add 1 tablespoon of butter to pan. Add asparagus pieces and leek and sauté until asparagus is tender crisp, about 3-4 minutes."
-                        },
-                        {
-                            "3": "Add garlic, lemon and orange zest, toasted pine nuts and parsley and sauté for about 1 minute, until fragrant. Season to taste with freshly ground pepper and salt and serve immediately."
-                        }
+                        "In a large non-stick pan, sauté pancetta, stirring frequently, over medium heat, until crisp and lightly golden.",
+                        "Add 1 tablespoon of butter to pan. Add asparagus pieces and leek and sauté until asparagus is tender crisp, about 3-4 minutes.",
+                        "Add garlic, lemon and orange zest, toasted pine nuts and parsley and sauté for about 1 minute, until fragrant. Season to taste with freshly ground pepper and salt and serve immediately.",
+                        "Add garlic, lemon and orange zest, toasted pine nuts and parsley and sauté for about 1 minute, until fragrant. Season to taste with freshly ground pepper and salt and serve immediately."
                     ],
                     "ImageURL": "https://d2k9njawademcf.cloudfront.net/slides/2478/original/052510F_415.JPG?1274843657"
                 },
@@ -362,18 +289,12 @@
                         }
                     ],
                     "Directions": [
-                        {
-                            "1": "Spread the peanut butter on one piece of bread."
-                        },
-                        {
-                            "2": "Spread the jelly on the other side."
-                        },
-                        {
-                            "3": "Put the two pieces of bread together to form a sandwich."
-                        },
-                        {
-                            "4": "Toddler adaptation: cut off crusts before serving."
-                        }
+                            "Spread the peanut butter on one piece of bread.",
+                            "Spread the jelly on the other side.",
+                            "Put the two pieces of bread together to form a sandwich.",
+                            "Toddler adaptation: cut off crusts before serving.",
+                            "Put the two pieces of bread together to form a sandwich.",
+                            "Toddler adaptation: cut off crusts before serving."
                     ],
                     "ImageURL": "http://img.sndimg.com/food/image/upload/w_266/v1/img/recipes/24/39/65/picIDMFir.jpg"
                 },
@@ -425,24 +346,13 @@
                         }
                     ],
                     "Directions": [
-                        {
-                            "1": "Cook the macaroni and set aside."
-                        },
-                        {
-                            "2": "In a pot, melt the butter and mix in salt and pepper."
-                        },
-                        {
-                            "3": "Slowly add in the flour, stirring continuously."
-                        },
-                        {
-                            "4": "Gradually add the milk and stir the mixture until smooth."
-                        },
-                        {
-                            "5": "Add the cheese on a low heat and melt into the mixture."
-                        },
-                        {
-                            "6": "Once the mixture is at your desired consistency, mix in the drained macaroni"
-                        }
+                            "Cook the macaroni and set aside.",
+                            "In a pot, melt the butter and mix in salt and pepper.",
+                            "Slowly add in the flour, stirring continuously.",
+                            "Gradually add the milk and stir the mixture until smooth.",
+                            "Add the cheese on a low heat and melt into the mixture.",
+                            "Once the mixture is at your desired consistency, mix in the drained macaroni",
+                            "Add the cheese on a low heat and melt into the mixture."
                     ],
                     "ImageURL": "http://img.sndimg.com/food/image/upload/w_266/v1/img/recipes/25/42/99/picKG4ssh.jpg"
                 }
@@ -477,18 +387,21 @@
                 $("#inventory-body").hide();
                 $("#shopping-body").hide();
                 $("#recipes-body").show();
+                $("#soundFooter").show();
             } else if (target == "inventory-nav") {
                 $("#menu-text").text("My Inventory");
                 $(".shopping-logo").hide();
                 $("#inventory-body").show();
                 $("#shopping-body").hide();
                 $("#recipes-body").hide();
+                $("#soundFooter").hide();
             } else {
                 $("#menu-text").text("Shopping List");
                 $(".shopping-logo").show();
                 $("#inventory-body").hide();
                 $("#shopping-body").show();
                 $("#recipes-body").hide();
+                $("#soundFooter").hide();
             }
         };
 
