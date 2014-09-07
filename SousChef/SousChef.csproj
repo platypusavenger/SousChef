@@ -240,8 +240,12 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dairy-icon.png" />
+    <Content Include="Content\meat-icon.png" />
+    <Content Include="Content\misc-icon.png" />
     <Content Include="Content\ShoppingList.png" />
     <Content Include="Content\SousChefLogo.png" />
+    <Content Include="Content\veggies-icon.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

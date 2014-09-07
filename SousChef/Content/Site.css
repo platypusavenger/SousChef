@@ -50,7 +50,17 @@ input[type="checkbox"].input-validation-error {
     display: none;
 }
 
+.top-menu-wrapper {
+    width: 100%;
+    display: inline-block;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+
 .top-menu {
+  width: 33%;
+  float: left;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -119,7 +129,69 @@ input[type="checkbox"].input-validation-error {
     margin: auto;
 }
 
-.body-container {
+#shopping-body {
+    margin-top: 50px;
     width: 100%;
+    overflow-x: scroll;
+
+    color: #646464;
+    font-size: 1.1em;
+    vertical-align: top;
 }
 
+#shopping-body th {
+    background-color: none;
+    min-width: 200px;
+}
+
+#shopping-body th img {
+    max-width: 66px;
+    max-height: 66px;
+}
+
+#shopping-body td table {
+    margin-right: 25px;
+    -webkit-box-shadow: 2px 2px 2px 2px #6464646;
+    -moz-box-shadow: 2x 2px 2px 2px #646464;
+    box-shadow: 2px 2px 2px 2px #646464;
+}
+
+#shopping-body td table td {
+    background-color: #faedcd;
+    border: 1px solid #646464;
+    min-width: 200px;
+    border-bottom: 1px solid #646464;
+}
+
+#shopping-body td table td .blank-cell {
+    background-color: transparent !important;
+    border: none;
+}
+
+.shopping-selected span {
+    float: right; 
+    background-color: red;
+    color: white;
+    border: 1px solid red;
+    padding: 2px 0px 0px 0px;
+    margin: 1px 0px 0px 0px;
+    font-size: .85em;
+    height: 100%;
+    width: 45px;
+    cursor: pointer;
+
+}
+#inventory-body {
+    overflow-x: scroll;
+    width: 100%;
+}
+#inventory-body tr {
+    overflow-x: scroll;
+    height: auto;
+}
+
+#inventory-body td {
+    background-color: #FFFFFF;
+    min-height: 80px;
+    min-width: 160px;
+}

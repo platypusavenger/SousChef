@@ -122,7 +122,7 @@ namespace SousChef.Classes
             StreamReader streamReader = null;
             try
             {
-                fileStream = new FileStream("SousChefAccessToken.txt", FileMode.OpenOrCreate, FileAccess.Read);
+                fileStream = new FileStream("C:\\sous\\SousChefAccessToken.txt", FileMode.OpenOrCreate, FileAccess.Read);
                 streamReader = new StreamReader(fileStream);
                 this.accessToken = streamReader.ReadLine();
                 this.accessTokenExpiryTime = streamReader.ReadLine();
@@ -253,7 +253,7 @@ namespace SousChef.Classes
 
                         this.refreshTokenExpiryTime = refreshExpiry.ToLongDateString() + " " + refreshExpiry.ToLongTimeString();
 
-                        fileStream = new FileStream("SousChefAccessToken.txt", FileMode.OpenOrCreate, FileAccess.Write);
+                        fileStream = new FileStream("C:\\sous\\SousChefAccessToken.txt", FileMode.OpenOrCreate, FileAccess.Write);
                         streamWriter = new StreamWriter(fileStream);
                         streamWriter.WriteLine(this.accessToken);
                         streamWriter.WriteLine(this.accessTokenExpiryTime);
@@ -337,7 +337,7 @@ namespace SousChef.Classes
                         DateTime accessTokenExpiryTime = currentServerTime.AddMilliseconds(Convert.ToDouble(deserializedJsonObj.expires_in.ToString()));
                         this.refreshToken = deserializedJsonObj.refresh_token.ToString();
 
-                        fileStream = new FileStream("SousChefAccessToken.txt", FileMode.OpenOrCreate, FileAccess.Write);
+                        fileStream = new FileStream("C:\\sous\\SousChefAccessToken.txt", FileMode.OpenOrCreate, FileAccess.Write);
                         streamWriter = new StreamWriter(fileStream);
                         streamWriter.WriteLine(this.accessToken);
                         streamWriter.WriteLine(this.accessTokenExpiryTime);
