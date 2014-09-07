@@ -7,6 +7,15 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+background: rgb(255,255,255); /* Old browsers */
+background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera 12+ */
+background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
+background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -40,3 +49,77 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+.top-menu {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #AADF57;
+  background: -webkit-linear-gradient(left, #AADF57 , #A0D466); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #AADF57, #A0D466); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #AADF57, #A0D466); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #AADF57 , #A0D466); /* Standard syntax */
+  color: #445D1C;
+  padding: 20px 0px 20px 0px;
+  cursor: pointer;
+}
+
+.top-menu h5 {
+  margin: 20px 0px 20px 0px;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.top-menu-selected {
+  background-color: #F2BA0B;
+  background: -webkit-linear-gradient(left, #F2BA0B , #F1A30B); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(right, #F2BA0B, #F1A30B); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(right, #F2BA0B, #F1A30B); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to right, #F2BA0B , #F1A30B); /* Standard syntax */
+  color: #972a23;
+}
+
+.top-menu-selected-text {
+  color: #972a23;
+  width: 100%;
+  text-align: center;
+}
+
+.sous-logo-container {
+  margin-top: 20px;
+  height: 180px;
+  width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.sous-logo {
+    width: 50%;
+    margin: 0 auto;
+}
+.sous-logo img {
+  max-width: 280px;
+  height: auto;
+  display: block;
+  margin: auto;
+}
+
+.shopping-logo {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.shopping-logo img {
+    max-width: 80px;
+    display: block;
+    margin: auto;
+}
+
+.body-container {
+    width: 100%;
+}
+

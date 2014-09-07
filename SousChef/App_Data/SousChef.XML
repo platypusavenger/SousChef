@@ -414,6 +414,142 @@
             <param name="message"></param>
             <returns></returns>
         </member>
+        <member name="F:SousChef.Classes.TextToSpeech.fqdn">
+            <summary>
+            Temporary variables for processing
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.apiKey">
+            <summary>
+            Temporary variables for processing
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.secretKey">
+            <summary>
+            Temporary variables for processing
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.accessToken">
+            <summary>
+            Temporary variables for processing
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.scope">
+            <summary>
+            Temporary variables for processing
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.refreshToken">
+            <summary>
+            Temporary variables for processing
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.refreshTokenExpiryTime">
+            <summary>
+            Temporary variables for processing
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.accessTokenExpiryTime">
+            <summary>
+            Temporary variables for processing
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.bypassSSL">
+            <summary>
+            Temporary variables for processing
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.TTSPlainText">
+            <summary>
+            variable for having the posted file.
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.refreshTokenExpiresIn">
+            <summary>
+            Gets or sets the value of refreshTokenExpiresIn
+            </summary>
+        </member>
+        <member name="M:SousChef.Classes.TextToSpeech.ReadAccessTokenFile(System.String@)">
+            <summary>
+            This function reads the Access Token File and stores the values of access token, expiry seconds
+            refresh token, last access token time and refresh token expiry time
+            This funciton returns true, if access token file and all others attributes read successfully otherwise returns false
+            </summary>
+            <param name="panelParam">Panel Details</param>
+            <returns>Returns boolean</returns>    
+        </member>
+        <member name="M:SousChef.Classes.TextToSpeech.IsTokenValid">
+            <summary>
+            This function validates the expiry of the access token and refresh token.
+            function compares the current time with the refresh token taken time, if current time is greater then returns INVALID_REFRESH_TOKEN
+            function compares the difference of last access token taken time and the current time with the expiry seconds, if its more, returns INVALID_ACCESS_TOKEN    
+            otherwise returns VALID_ACCESS_TOKEN
+            </summary>
+            <returns>string, which specifies the token validity</returns>
+        </member>
+        <member name="M:SousChef.Classes.TextToSpeech.GetAccessToken(SousChef.Classes.TextToSpeech.AccessType,System.String@)">
+            <summary>
+            This function get the access token based on the type parameter type values.
+            If type value is 1, access token is fetch for client credential flow
+            If type value is 2, access token is fetch for client credential flow based on the exisiting refresh token
+            </summary>
+            <param name="type">Type as integer</param>
+            <param name="panelParam">Panel details</param>
+            <returns>Return boolean</returns>
+        </member>
+        <member name="M:SousChef.Classes.TextToSpeech.BypassCertificateError">
+            <summary>
+            Neglect the ssl handshake error with authentication server 
+            </summary>
+        </member>
+        <member name="M:SousChef.Classes.TextToSpeech.ReadAndGetAccessToken(System.String@)">
+            <summary>
+            This function is used to read access token file and validate the access token
+            this function returns true if access token is valid, or else false is returned
+            </summary>
+            <param name="panelParam">Panel Details</param>
+            <returns>Returns Boolean</returns>
+        </member>
+        <member name="M:SousChef.Classes.TextToSpeech.ConvertTextToSpeech(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            This function invokes api SpeechToText to convert the given wav amr file and displays the result.
+            </summary>
+        </member>
+        <member name="T:SousChef.Classes.TextToSpeech.AccessType">
+            <summary>
+            Access Token Types
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.AccessType.ClientCredential">
+            <summary>
+            Access Token Type is based on Client Credential Mode
+            </summary>
+        </member>
+        <member name="F:SousChef.Classes.TextToSpeech.AccessType.RefreshToken">
+            <summary>
+            Access Token Type is based on Refresh Token
+            </summary>
+        </member>
+        <member name="T:SousChef.Classes.AccessTokenResponse">
+            <summary>
+            Access Token Data Structure
+            </summary>
+        </member>
+        <member name="P:SousChef.Classes.AccessTokenResponse.access_token">
+            <summary>
+            Gets or sets Access Token ID
+            </summary>
+        </member>
+        <member name="P:SousChef.Classes.AccessTokenResponse.refresh_token">
+            <summary>
+            Gets or sets Refresh Token ID
+            </summary>
+        </member>
+        <member name="P:SousChef.Classes.AccessTokenResponse.expires_in">
+            <summary>
+            Gets or sets Expires in milli seconds
+            </summary>
+        </member>
         <member name="T:SousChef.Controllers.InventoryController">
             <summary>
             Inventory Controller - Basic CRUD for Inventory
@@ -485,6 +621,67 @@
             <param name="id">The InventoryId of the Inventory to delete.</param>
             <returns>
             200 - Success + The deleted Inventory 
+            401 - Not Authorized 
+            405 - Method Not Allowed
+            500 - Internal Server Error + the Exception
+            </returns>
+        </member>
+        <member name="T:SousChef.Controllers.InventoryShoppingListController">
+            <summary>
+            InventoryShoppingList Controller - Basic CRUD for InventoryShoppingList
+            </summary>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryShoppingListController.Get">
+            <summary>
+            An iQueryable InventoryShoppingList lookup
+            </summary>
+            <returns>
+            200 - Success + A list of InventoryShoppingList
+            401 - Not Authorized 
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryShoppingListController.Get(System.Int32)">
+            <summary>
+            Retrieve a single InventoryShoppingList from the database.
+            </summary>
+            <param name="id">The InventoryShoppingListId of the InventoryShoppingList to return.</param>
+            <returns>
+            200 - Success + The requested InventoryShoppingList.
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryShoppingListController.Put(System.Int32,SousChef.Models.InventoryShoppingListModel)">
+            <summary>
+            Save changes to a single InventoryShoppingList to the database.
+            </summary>
+            <param name="id">The InventoryShoppingListId of the InventoryShoppingList to save.</param>
+            <param name="inventoryshoppinglistModel">The model of the edited InventoryShoppingList</param>
+            <returns>
+            405 - Method Not Allowed
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryShoppingListController.Post(SousChef.Models.InventoryShoppingListModel)">
+            <summary>
+            A new InventoryShoppingList to be added.
+            </summary>
+            <param name="inventoryshoppinglistModel">The new InventoryShoppingList</param>
+            <returns>
+            201 - Created + The new InventoryShoppingList
+            400 - Bad Request + (Invalid Model State)
+            401 - Not Authorized 
+            404 - Not Found + Reason
+            500 - Internal Server Error + Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.InventoryShoppingListController.Delete(System.Int32)">
+            <summary>
+            Delete a InventoryShoppingList from the database.
+            </summary>
+            <param name="id">The InventoryShoppingListId of the InventoryShoppingList to delete.</param>
+            <returns>
+            200 - Success + The deleted InventoryShoppingList 
             401 - Not Authorized 
             405 - Method Not Allowed
             500 - Internal Server Error + the Exception
@@ -898,6 +1095,15 @@
             401 - Not Authorized 
             405 - Method Not Allowed
             500 - Internal Server Error + the Exception
+            </returns>
+        </member>
+        <member name="M:SousChef.Controllers.TestController.Get(System.String)">
+            <summary>
+            A test stub for Text To Speech
+            </summary>
+            <returns>
+            200 - Success + An HTML fragment to test
+            500 - Internal Server Error + Exception
             </returns>
         </member>
     </members>
