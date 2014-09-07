@@ -127,6 +127,67 @@ namespace SousChef.Controllers
             }
         }
 
+        // POST api/Receipt/Detailed
+        /// <summary>
+        /// A new Receipt to be added with a list of items.
+        /// </summary>
+        /// <param name="receiptModel">The new Receipt</param>
+        /// <returns>
+        /// 201 - Created + The new Receipt
+        /// 400 - Bad Request + (Invalid Model State)
+        /// 401 - Not Authorized 
+        /// 404 - Not Found + Reason
+        /// 500 - Internal Server Error + Exception
+        /// </returns>
+        [ResponseType(typeof(ReceiptModelDetailed))]
+        [Route("api/Receipt/Detailed",Name="PostReceiptDetailed")]
+        public IHttpActionResult PostDetailed(ReceiptModelDetailed receiptModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                InventoryUserSource userSource = _db.InventoryUserSources.FirstOrDefault(o => o.id == receiptModel.inventoryUserSourceId);
+                if (userSource == null)
+                    throw new APIException("User not found.", 404);
+                if (Request.Headers.Authorization == null || !Request.Headers.Authorization.ToString().Equals("Bearer " + userSource.accessKey))
+                    throw new APIException("Unable to authorize user.", 401);
+                Receipt receipt = new Receipt();
+                receipt.inventoryUserSourceId = receiptModel.inventoryUserSourceId;
+                receipt.timestamp = receiptModel.timestamp;
+                foreach (int oneItem in receiptModel.Items)
+                {
+                    ReceiptItem receiptitem = new ReceiptItem();
+                    receiptitem.itemId = oneItem;
+                    receiptitem.Receipt = receipt;
+                    _db.ReceiptItems.Add(receiptitem);
+                }
+                
+                _db.Receipts.Add(receipt);
+                _db.SaveChanges();
+
+                receiptModel.id = receipt.id;
+
+                return CreatedAtRoute("PostReceiptDetailed", new { id = receipt.id }, receiptModel);
+            }
+            catch (APIException ex)
+            {
+                if (ex.code == 404)
+                    return this.NotFound(ex.message);
+                else if (ex.code == 401)
+                    return this.Unauthorized();
+                else
+                    return this.InternalServerError(ex);
+            }
+            catch (Exception e)
+            {
+                return this.InternalServerError(e);
+            }
+        }
+
         // DELETE api/Receipt/5
         /// <summary>
         /// Delete a Receipt from the database.

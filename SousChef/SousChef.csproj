@@ -162,6 +162,7 @@
     <Compile Include="Classes\Utils.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\InventoryShoppingListController.cs" />
     <Compile Include="Controllers\InventoryUserController.cs" />
     <Compile Include="Controllers\InventoryUserSourceController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
@@ -170,6 +171,15 @@
     <Compile Include="Controllers\ReceiptItemController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
     <Compile Include="Data\Inventory.cs">
+      <DependentUpon>SousChefData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\InventoryItem.cs">
+      <DependentUpon>SousChefData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\InventoryShoppingList.cs">
+      <DependentUpon>SousChefData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\InventoryShoppingListItem.cs">
       <DependentUpon>SousChefData.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\InventoryUser.cs">
@@ -209,6 +219,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\InventoryModel.cs" />
+    <Compile Include="Models\InventoryShoppingListModel.cs" />
     <Compile Include="Models\InventoryUserModel.cs" />
     <Compile Include="Models\InventoryUserSourceModel.cs" />
     <Compile Include="Models\ItemModel.cs" />
@@ -219,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SousChef.XML" />
+    <Content Include="App_Data\USDA.sql" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

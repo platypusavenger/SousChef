@@ -18,6 +18,12 @@
         <EntityTypeShape EntityType="SousChefModel.InventoryUser" Width="1.5" PointX="3" PointY="1" />
         <AssociationConnector Association="SousChefModel.FK_InventoryUser_InventoryUser" />
         <AssociationConnector Association="SousChefModel.FK_InventoryUserSource_InventoryUser" />
+        <EntityTypeShape EntityType="SousChefModel.InventoryItem" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="SousChefModel.InventoryShoppingList" Width="1.5" PointX="9.75" PointY="4.125" />
+        <EntityTypeShape EntityType="SousChefModel.InventoryShoppingListItem" Width="1.5" PointX="3.375" PointY="7.75" />
+        <AssociationConnector Association="SousChefModel.FK_InventoryShoppingList_Inventory" />
+        <AssociationConnector Association="SousChefModel.FK_InventoryShoppingList_InventoryUser" />
+        <AssociationConnector Association="SousChefModel.FK_InventoryShoppingList_Item" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

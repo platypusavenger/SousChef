@@ -11,7 +11,17 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="model" Type="nvarchar" MaxLength="56" Nullable="false" />
           <Property Name="version" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InventoryShoppingList">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inventoryId" Type="int" Nullable="false" />
+          <Property Name="itemId" Type="int" Nullable="false" />
+          <Property Name="inventoryUserId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="InventoryUser">
           <Key>
@@ -67,6 +77,75 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="description" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SousChef.dbo.InventoryItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="InventoryItems">
+          <Key>
+            <PropertyRef Name="itemId" />
+            <PropertyRef Name="isPerishable" />
+          </Key>
+          <Property Name="id" Type="int" />
+          <Property Name="description" Type="nvarchar" MaxLength="256" />
+          <Property Name="timestamp" Type="datetime" />
+          <Property Name="itemId" Type="int" Nullable="false" />
+          <Property Name="itemDescription" Type="nvarchar" MaxLength="256" />
+          <Property Name="upc" Type="nvarchar" MaxLength="256" />
+          <Property Name="isPerishable" Type="bit" Nullable="false" />
+          <Property Name="expiration" Type="int" />
+          <Property Name="image" Type="nvarchar" MaxLength="512" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'SousChef.dbo.InventoryShoppingListItems' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="InventoryShoppingListItems">
+          <Key>
+            <PropertyRef Name="itemId" />
+            <PropertyRef Name="isPerishable" />
+          </Key>
+          <Property Name="id" Type="int" />
+          <Property Name="description" Type="nvarchar" MaxLength="256" />
+          <Property Name="itemId" Type="int" Nullable="false" />
+          <Property Name="itemDescription" Type="nvarchar" MaxLength="256" />
+          <Property Name="upc" Type="nvarchar" MaxLength="256" />
+          <Property Name="isPerishable" Type="bit" Nullable="false" />
+          <Property Name="expiration" Type="int" />
+          <Property Name="image" Type="nvarchar" MaxLength="512" />
+        </EntityType>
+        <Association Name="FK_InventoryShoppingList_Inventory">
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="1" />
+          <End Role="InventoryShoppingList" Type="Self.InventoryShoppingList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryShoppingList">
+              <PropertyRef Name="inventoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryShoppingList_InventoryUser">
+          <End Role="InventoryUser" Type="Self.InventoryUser" Multiplicity="1" />
+          <End Role="InventoryShoppingList" Type="Self.InventoryShoppingList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryShoppingList">
+              <PropertyRef Name="inventoryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryShoppingList_Item">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="InventoryShoppingList" Type="Self.InventoryShoppingList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryShoppingList">
+              <PropertyRef Name="itemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_InventoryUser_InventoryUser">
           <End Role="Inventory" Type="Self.Inventory" Multiplicity="1" />
           <End Role="InventoryUser" Type="Self.InventoryUser" Multiplicity="*" />
@@ -141,12 +220,50 @@
         </Association>
         <EntityContainer Name="SousChefModelStoreContainer">
           <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryShoppingList" EntityType="Self.InventoryShoppingList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryUser" EntityType="Self.InventoryUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryUserSource" EntityType="Self.InventoryUserSource" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReceiptItem" EntityType="Self.ReceiptItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InventoryItems].[id] AS [id], 
+    [InventoryItems].[description] AS [description], 
+    [InventoryItems].[timestamp] AS [timestamp], 
+    [InventoryItems].[itemId] AS [itemId], 
+    [InventoryItems].[itemDescription] AS [itemDescription], 
+    [InventoryItems].[upc] AS [upc], 
+    [InventoryItems].[isPerishable] AS [isPerishable], 
+    [InventoryItems].[expiration] AS [expiration], 
+    [InventoryItems].[image] AS [image]
+    FROM [dbo].[InventoryItems] AS [InventoryItems]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="InventoryShoppingListItems" EntityType="Self.InventoryShoppingListItems" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [InventoryShoppingListItems].[id] AS [id], 
+    [InventoryShoppingListItems].[description] AS [description], 
+    [InventoryShoppingListItems].[itemId] AS [itemId], 
+    [InventoryShoppingListItems].[itemDescription] AS [itemDescription], 
+    [InventoryShoppingListItems].[upc] AS [upc], 
+    [InventoryShoppingListItems].[isPerishable] AS [isPerishable], 
+    [InventoryShoppingListItems].[expiration] AS [expiration], 
+    [InventoryShoppingListItems].[image] AS [image]
+    FROM [dbo].[InventoryShoppingListItems] AS [InventoryShoppingListItems]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_InventoryShoppingList_Inventory" Association="Self.FK_InventoryShoppingList_Inventory">
+            <End Role="Inventory" EntitySet="Inventory" />
+            <End Role="InventoryShoppingList" EntitySet="InventoryShoppingList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryShoppingList_InventoryUser" Association="Self.FK_InventoryShoppingList_InventoryUser">
+            <End Role="InventoryUser" EntitySet="InventoryUser" />
+            <End Role="InventoryShoppingList" EntitySet="InventoryShoppingList" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryShoppingList_Item" Association="Self.FK_InventoryShoppingList_Item">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="InventoryShoppingList" EntitySet="InventoryShoppingList" />
+          </AssociationSet>
           <AssociationSet Name="FK_InventoryUser_InventoryUser" Association="Self.FK_InventoryUser_InventoryUser">
             <End Role="Inventory" EntitySet="Inventory" />
             <End Role="InventoryUser" EntitySet="InventoryUser" />
@@ -208,6 +325,21 @@
             <End Role="InventoryUser" EntitySet="InventoryUsers" />
             <End Role="InventoryUserSource" EntitySet="InventoryUserSources" />
           </AssociationSet>
+          <EntitySet Name="InventoryItems" EntityType="SousChefModel.InventoryItem" />
+          <EntitySet Name="InventoryShoppingLists" EntityType="SousChefModel.InventoryShoppingList" />
+          <EntitySet Name="InventoryShoppingListItems" EntityType="SousChefModel.InventoryShoppingListItem" />
+          <AssociationSet Name="FK_InventoryShoppingList_Inventory" Association="SousChefModel.FK_InventoryShoppingList_Inventory">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="InventoryShoppingList" EntitySet="InventoryShoppingLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryShoppingList_InventoryUser" Association="SousChefModel.FK_InventoryShoppingList_InventoryUser">
+            <End Role="InventoryUser" EntitySet="InventoryUsers" />
+            <End Role="InventoryShoppingList" EntitySet="InventoryShoppingLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryShoppingList_Item" Association="SousChefModel.FK_InventoryShoppingList_Item">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="InventoryShoppingList" EntitySet="InventoryShoppingLists" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Inventory">
           <Key>
@@ -217,6 +349,8 @@
           <Property Name="description" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="version" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="InventoryUsers" Relationship="SousChefModel.FK_InventoryUser_InventoryUser" FromRole="Inventory" ToRole="InventoryUser" />
+          <Property Name="model" Type="String" Nullable="false" MaxLength="56" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="InventoryShoppingLists" Relationship="SousChefModel.FK_InventoryShoppingList_Inventory" FromRole="Inventory" ToRole="InventoryShoppingList" />
         </EntityType>
         <EntityType Name="InventoryUserSource">
           <Key>
@@ -241,6 +375,7 @@
           <Property Name="expiration" Type="Int32" Nullable="false" />
           <Property Name="image" Type="String" Nullable="false" MaxLength="512" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ReceiptItems" Relationship="SousChefModel.FK_ReceiptItem_Item" FromRole="Item" ToRole="ReceiptItem" />
+          <NavigationProperty Name="InventoryShoppingLists" Relationship="SousChefModel.FK_InventoryShoppingList_Item" FromRole="Item" ToRole="InventoryShoppingList" />
         </EntityType>
         <EntityType Name="Receipt">
           <Key>
@@ -330,6 +465,7 @@
           <Property Name="phoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Inventory" Relationship="SousChefModel.FK_InventoryUser_InventoryUser" FromRole="InventoryUser" ToRole="Inventory" />
           <NavigationProperty Name="InventoryUserSources" Relationship="SousChefModel.FK_InventoryUserSource_InventoryUser" FromRole="InventoryUser" ToRole="InventoryUserSource" />
+          <NavigationProperty Name="InventoryShoppingLists" Relationship="SousChefModel.FK_InventoryShoppingList_InventoryUser" FromRole="InventoryUser" ToRole="InventoryShoppingList" />
         </EntityType>
         <Association Name="FK_InventoryUser_InventoryUser">
           <End Type="SousChefModel.Inventory" Role="Inventory" Multiplicity="1" />
@@ -355,6 +491,83 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="InventoryItem">
+          <Key>
+            <PropertyRef Name="itemId" />
+            <PropertyRef Name="isPerishable" />
+          </Key>
+          <Property Name="id" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <Property Name="itemId" Type="Int32" Nullable="false" />
+          <Property Name="itemDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="upc" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="isPerishable" Type="Boolean" Nullable="false" />
+          <Property Name="expiration" Type="Int32" />
+          <Property Name="image" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="InventoryShoppingList">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inventoryId" Type="Int32" Nullable="false" />
+          <Property Name="itemId" Type="Int32" Nullable="false" />
+          <Property Name="inventoryUserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inventory" Relationship="SousChefModel.FK_InventoryShoppingList_Inventory" FromRole="InventoryShoppingList" ToRole="Inventory" />
+          <NavigationProperty Name="InventoryUser" Relationship="SousChefModel.FK_InventoryShoppingList_InventoryUser" FromRole="InventoryShoppingList" ToRole="InventoryUser" />
+          <NavigationProperty Name="Item" Relationship="SousChefModel.FK_InventoryShoppingList_Item" FromRole="InventoryShoppingList" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="InventoryShoppingListItem">
+          <Key>
+            <PropertyRef Name="itemId" />
+            <PropertyRef Name="isPerishable" />
+          </Key>
+          <Property Name="id" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="itemId" Type="Int32" Nullable="false" />
+          <Property Name="itemDescription" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="upc" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="isPerishable" Type="Boolean" Nullable="false" />
+          <Property Name="expiration" Type="Int32" />
+          <Property Name="image" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_InventoryShoppingList_Inventory">
+          <End Type="SousChefModel.Inventory" Role="Inventory" Multiplicity="1" />
+          <End Type="SousChefModel.InventoryShoppingList" Role="InventoryShoppingList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryShoppingList">
+              <PropertyRef Name="inventoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryShoppingList_InventoryUser">
+          <End Type="SousChefModel.InventoryUser" Role="InventoryUser" Multiplicity="1" />
+          <End Type="SousChefModel.InventoryShoppingList" Role="InventoryShoppingList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryShoppingList">
+              <PropertyRef Name="inventoryUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryShoppingList_Item">
+          <End Type="SousChefModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="SousChefModel.InventoryShoppingList" Role="InventoryShoppingList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="InventoryShoppingList">
+              <PropertyRef Name="itemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -364,6 +577,7 @@
           <EntitySetMapping Name="Inventories">
             <EntityTypeMapping TypeName="SousChefModel.Inventory">
               <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="model" ColumnName="model" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -426,6 +640,45 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="displayName" ColumnName="displayName" />
                 <ScalarProperty Name="inventoryId" ColumnName="inventoryId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryItems">
+            <EntityTypeMapping TypeName="SousChefModel.InventoryItem">
+              <MappingFragment StoreEntitySet="InventoryItems">
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="expiration" ColumnName="expiration" />
+                <ScalarProperty Name="isPerishable" ColumnName="isPerishable" />
+                <ScalarProperty Name="upc" ColumnName="upc" />
+                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryShoppingLists">
+            <EntityTypeMapping TypeName="SousChefModel.InventoryShoppingList">
+              <MappingFragment StoreEntitySet="InventoryShoppingList">
+                <ScalarProperty Name="inventoryUserId" ColumnName="inventoryUserId" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="inventoryId" ColumnName="inventoryId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryShoppingListItems">
+            <EntityTypeMapping TypeName="SousChefModel.InventoryShoppingListItem">
+              <MappingFragment StoreEntitySet="InventoryShoppingListItems">
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="expiration" ColumnName="expiration" />
+                <ScalarProperty Name="isPerishable" ColumnName="isPerishable" />
+                <ScalarProperty Name="upc" ColumnName="upc" />
+                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

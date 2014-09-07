@@ -17,6 +17,7 @@ namespace SousChef.Data
         public Item()
         {
             this.ReceiptItems = new HashSet<ReceiptItem>();
+            this.InventoryShoppingLists = new HashSet<InventoryShoppingList>();
         }
     
         public int id { get; set; }
@@ -27,5 +28,6 @@ namespace SousChef.Data
         public string image { get; set; }
     
         public virtual ICollection<ReceiptItem> ReceiptItems { get; set; }
+        public virtual ICollection<InventoryShoppingList> InventoryShoppingLists { get; set; }
     }
 }

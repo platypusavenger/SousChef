@@ -12,23 +12,15 @@ namespace SousChef.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class InventoryUser
+    public partial class InventoryShoppingList
     {
-        public InventoryUser()
-        {
-            this.InventoryUserSources = new HashSet<InventoryUserSource>();
-            this.InventoryShoppingLists = new HashSet<InventoryShoppingList>();
-        }
-    
         public int id { get; set; }
         public int inventoryId { get; set; }
-        public string displayName { get; set; }
-        public string email { get; set; }
-        public bool isVerified { get; set; }
-        public string phoneNumber { get; set; }
+        public int itemId { get; set; }
+        public int inventoryUserId { get; set; }
     
         public virtual Inventory Inventory { get; set; }
-        public virtual ICollection<InventoryUserSource> InventoryUserSources { get; set; }
-        public virtual ICollection<InventoryShoppingList> InventoryShoppingLists { get; set; }
+        public virtual InventoryUser InventoryUser { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

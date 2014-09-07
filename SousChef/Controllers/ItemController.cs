@@ -37,6 +37,7 @@ namespace SousChef.Controllers
             {
                 id = o.id, 
                 description = o.description,
+                upc = o.upc,
                 isPerishable = o.isPerishable,
                 expiration = o.expiration,
                 image = o.image
@@ -96,6 +97,7 @@ namespace SousChef.Controllers
 				if (item == null)
                     throw new APIException("Item not found.", 404);
                 item.description = itemModel.description;
+                item.upc = itemModel.upc;
                 item.isPerishable = itemModel.isPerishable;
                 item.expiration = itemModel.expiration;
                 item.image = itemModel.image;
@@ -141,6 +143,7 @@ namespace SousChef.Controllers
             {
                 Item item = new Item();
                 item.description = itemModel.description;
+                item.upc = itemModel.upc;
                 item.isPerishable = itemModel.isPerishable;
                 item.expiration = itemModel.expiration;
                 item.image = itemModel.image;

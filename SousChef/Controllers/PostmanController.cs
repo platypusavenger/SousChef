@@ -31,7 +31,7 @@ namespace SousChef.Controllers
                 string baseUri = requestUri.Scheme + "://" + requestUri.Host + ":" + requestUri.Port + HttpContext.Current.Request.ApplicationPath;
                 var postManCollection = new PostmanCollection();
                 postManCollection.id = Guid.NewGuid();
-                postManCollection.name = "Staffing API";
+                postManCollection.name = "Sous Chef API";
                 postManCollection.timestamp = DateTime.Now.Ticks;
                 postManCollection.requests = new Collection<PostmanRequest>();
                 foreach (var apiDescription in Configuration.Services.GetApiExplorer().ApiDescriptions)

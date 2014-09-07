@@ -63,6 +63,35 @@ namespace SousChef.Controllers
             return Ok(inventory);
         }
 
+        // Get api/Inventory/Detailed/5
+        /// <summary>
+        /// Retrieve a single Inventory from the database.
+        /// </summary>
+        /// <param name="id">The InventoryId of the Inventory to return.</param>
+        /// <returns>
+        /// 200 - Success + The requested Inventory.
+        /// 401 - Not Authorized 
+        /// 404 - Not Found + Reason
+        /// </returns>
+        [ResponseType(typeof(InventoryModelDetailed))]
+        [Route("api/Inventory/Detailed/{id:int}")]
+        public IHttpActionResult GetDetailed(int id)
+        {
+            InventoryModel inventory = Get().FirstOrDefault<InventoryModel>(o => o.id == id);
+            if (inventory == null)
+            {
+                return this.NotFound("Inventory not found.");
+            }
+
+            InventoryModelDetailed detailed = new InventoryModelDetailed();
+            detailed.id = inventory.id;
+            detailed.description = inventory.description;
+            detailed.version = inventory.version;
+            detailed.InventoryItems = _db.InventoryItems.Where(o => o.id == id).ToList<InventoryItem>();
+            return Ok(detailed);
+        }
+
+
         // PUT api/Inventory/5
         /// <summary>
         /// Save changes to a single Inventory to the database.
