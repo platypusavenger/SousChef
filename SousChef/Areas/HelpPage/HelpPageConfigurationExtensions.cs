@@ -7,9 +7,9 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Description;
-using StaffingAPI.Areas.HelpPage.Models;
+using SousChef.Areas.HelpPage.Models;
 
-namespace StaffingAPI.Areas.HelpPage
+namespace SousChef.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {

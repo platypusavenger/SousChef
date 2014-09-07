@@ -16,9 +16,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using StaffingAPI.Data;
-using StaffingAPI.Models;
-using StaffingAPI.Classes;
+using SousChef.Data;
+using SousChef.Models;
+using SousChef.Classes;
 
 namespace <#= Namespace #>
 {

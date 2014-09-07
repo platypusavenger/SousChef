@@ -1,9 +1,9 @@
 using System;
 using System.Web.Http;
 using System.Web.Mvc;
-using StaffingAPI.Areas.HelpPage.Models;
+using SousChef.Areas.HelpPage.Models;
 
-namespace StaffingAPI.Areas.HelpPage.Controllers
+namespace SousChef.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.

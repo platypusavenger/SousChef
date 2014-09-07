@@ -3,7 +3,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Description;
 
-namespace StaffingAPI.Areas.HelpPage
+namespace SousChef.Areas.HelpPage
 {
     public static class ApiDescriptionExtensions
     {
