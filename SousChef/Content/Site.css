@@ -185,6 +185,12 @@ input[type="checkbox"].input-validation-error {
     overflow-x: scroll;
     width: 100%;
 }
+
+#inventory-body table {
+    width: auto;
+    height: 40%;
+}
+
 #inventory-body tr {
     overflow-x: scroll;
     height: auto;
@@ -194,4 +200,29 @@ input[type="checkbox"].input-validation-error {
     background-color: #FFFFFF;
     min-height: 80px;
     min-width: 160px;
+}
+
+#recipes-body {
+    overflow-x: scroll;
+    width: 100%;
+}
+
+#recipes-body .recipe {
+    background-color: #FFFFFF;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.recipe-outer,  .recipe-outer tr, .recipe-outer td, .recipe {
+    width: 100%;
+}
+
+.recipe img {
+    max-width: 180px;
+    max-height: 180px;
+    cursor: pointer;
+}
+
+.recipe ul {
+    list-style: none;
 }

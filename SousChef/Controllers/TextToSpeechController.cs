@@ -63,13 +63,6 @@ namespace SousChef.Controllers
 
             for (int i = 0; i < 5; i++)
             {
-                RestClient client = new RestClient("https://api-m2x.att.com/v1/feeds");
-                RestRequest request = new RestRequest("/streams/latitude/value", Method.PUT);
-                request.AddBody(request.JsonSerializer.Serialize(new { at = startTime, value = leaderStartLat}));
-                request.AddHeader("X-M2X-KEY", "91c8a00b5cb7e6cc27c31d55a1e46fca");
-                request.AddHeader("Content-Type", "application/json");
-                IRestResponse response = client.Execute(request);
-                return Ok("Test");
                 result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + leader + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + leaderStartLat + "'}");
                 result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower1 + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + follower1StartLat + "'}");
                 result.Add(@"PUT https://api-m2x.att.com/v1/feeds/" + follower2 + @"/streams/latitude/value { 'at': '" + startTime + "', 'value': '" + follower2StartLat + "'}");
